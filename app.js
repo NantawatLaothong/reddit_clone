@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const port = process.env.PORT | 7098;
+const port = 7098;
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
@@ -17,6 +17,7 @@ const aws = require('aws-sdk');
 // var favicon = require('serve-favicon');
 const User = require('./models/user');
 const rRouter = require('./routes/subreddits');
+const authRoute = require('./routes/auth-route');
 
 // session 
 sessionOptions = {
@@ -69,11 +70,12 @@ app.use((req, res, next)=>{
 })
 
 app.get('/', async (req, res)=>{
+
     res.render('home');
 });
 
 app.use('/r', rRouter);
-
+app.use('/users', authRoute);
 app.listen(port, ()=>{
     console.log(`app is listening on port ${port}`);
     console.log(process.env.message)

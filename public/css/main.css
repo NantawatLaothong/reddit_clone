@@ -1,0 +1,60 @@
+.join_banner {
+    background-color: #000;
+    color: white;
+    height: 100%;
+    /* background-image: url('/images/shinji.png'); */
+    /* background-size: cover; */
+    float: left;
+    width: 50%;
+}
+
+.join_form {
+    color: #000;
+    height: 100%;
+    width: 50%;
+    float: left;
+    background: #fff;
+}
+
+#join a {
+    color: #fff;
+}
+
+#join a:hover{
+    color: aqua;
+}
+
+
+body {
+    background: #DAE0E6;
+}
+
+.btn-sign-up {
+    border-radius: 999px;
+    
+}
+
+.btn-sign-up a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-log-in {
+    border-radius: 999px;
+    border-color: #0079D3;
+}
+
+.btn-log-in a {
+    color: #0079D3;
+    text-decoration: none;
+}
+
+.post {
+    background: #fff;
+}
+
+.post-info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}

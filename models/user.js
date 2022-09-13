@@ -9,18 +9,6 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    arts: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Art'
-        }
-    ],
-    comments: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Comment'
-        }
-    ],
     DOB: {
         day: Number,
         month: String,
@@ -35,13 +23,6 @@ const userSchema = new Schema({
                 filename: String,
         }
     },
-    profession: [{
-        type: String
-    }],
-    country: {
-        type: String
-    },
-    
 }, { timestamps: true });
 // This will add Username nad password to the schema and some methods to use for authentication 
 // username will be unique
