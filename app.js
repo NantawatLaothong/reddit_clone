@@ -16,14 +16,15 @@ const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
 // var favicon = require('serve-favicon');
 const User = require('./models/user');
-const rRouter = require('./routes/subreddits');
+const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
+const url = 'mongodb://127.0.0.1:27017/reddit';
 
 // session 
 sessionOptions = {
     resave: false,
     saveUninitialized: false,
-    secret:process.env.secret,
+    secret:"asvEtt#4215",
 }
 
 app.use(session(sessionOptions))
@@ -45,7 +46,8 @@ app.engine('ejs', ejsMate);
 
 // database connection
 async function connect(){
-    mongoose.connect(process.env.mongoURI);
+    // edit here
+    mongoose.connect(url);
 }
 
 connect().then(res=>console.log('DB connected'))
@@ -70,13 +72,12 @@ app.use((req, res, next)=>{
 })
 
 app.get('/', async (req, res)=>{
-
     res.render('home');
 });
 
-app.use('/r', rRouter);
+app.use('/r', subredditRouter);
 app.use('/users', authRoute);
+
 app.listen(port, ()=>{
-    console.log(`app is listening on port ${port}`);
-    console.log(process.env.message)
+    console.log(`app is listening on: http://localhost:${port}`);
 })
