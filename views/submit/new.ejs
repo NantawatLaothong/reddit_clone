@@ -18,41 +18,42 @@
                 </div>
               </dive>
               <div class="row mt-2">
-                  <form>
+                  <form action="/r/<%= r %>" method="POST">
                     <div class="input-group">
                         <input type="media" class="form-control" id="InsertMedia" placeholder="Post, Images & Video, Link, Poll, Talk">  
                     </div>
                     <div class="row mt-3">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="PostTitle" placeholder="Title">
+                            <input type="text" class="form-control" placeholder="Title" name="title">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="input-group">
-                            <textarea class="form-control" id="PostText" rows="5"></textarea> 
+                            <textarea class="form-control" id="PostText" rows="5" name="body"></textarea> 
                         </div>
                     </div>  
+                    <div class="col-sm-3">
+                        <div class="row mt-2">
+                          <div class="btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="btncheck1">+OC</label>
+                          
+                            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="btncheck2">+Spoiler</label>
+                          
+                            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="btncheck3">+NSFW</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button class="btn btn-outline-secondary me-md-2 custom-button-size" type="button">Save Draft</button>
+                      <button class="btn btn-secondary custom-button-size" type="submit">Post</button>
+                    </div>
+                  </div>
                   </form>          
                 </div>
-            <div class="col-sm-3">
-                <div class="row mt-2">
-                  <div class="btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btncheck1">+OC</label>
-                  
-                    <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btncheck2">+Spoiler</label>
-                  
-                    <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btncheck3">+NSFW</label>
-                  </div>
-              </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-outline-secondary me-md-2 custom-button-size" type="button">Save Draft</button>
-              <button class="btn btn-secondary custom-button-size" type="button">Post</button>
-            </div>
-          </div>
+            
         </div>
           <div class="col-sm-4">
             <div class="bg-light p-3">
