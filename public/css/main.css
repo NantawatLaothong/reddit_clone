@@ -58,3 +58,33 @@ body {
     flex-direction: row;
     gap: 20px;
 }
+
+.post {
+    border: 1px solid black;
+    margin: 10px 0px;
+    padding: 5px;
+    display: flex;
+    gap: 20px;
+}
+.post-upvote {
+    display: flex;
+    flex-direction: column;
+}
+.recent-posts {
+    background-color: #fff;
+    margin-bottom: 10px;
+    
+}
+
+.top-communities {
+    background-color: #fff;
+    margin-top: 10px;
+}
+
+.btn {
+    border-radius: 999px;
+}
+
+.faq {
+    background-color: #fff;
+}

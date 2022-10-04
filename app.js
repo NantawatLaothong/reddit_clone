@@ -18,7 +18,9 @@ const aws = require('aws-sdk');
 const User = require('./models/user');
 const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
-const url = 'mongodb://127.0.0.1:27017/reddit';
+const url = "mongodb://localhost/reddit"
+
+const Subreddit = require('./models/subreddit');
 
 // session 
 sessionOptions = {
@@ -74,6 +76,28 @@ app.use((req, res, next)=>{
 app.get('/', async (req, res)=>{
     res.render('home');
 });
+
+// to create a subreddit
+app.post('/r', async(req, res)=>{
+    try{
+      const body = req.body;
+      console.log(req.body);
+      const user = await User.findById(req.user._id);
+      const subreddit = new Subreddit(body)
+      user.subreddits.push(subreddit)
+      subreddit.creator = user;
+      await user.save();
+      await subreddit.save();
+      res.redirect(`/r/${subreddit.r}`)
+    }catch(err){
+      console.log(err)
+      res.send('something went wrong in POST /r')
+    }
+  })
+
+app.get('/submit', async(req,res)=>{
+    res.render('submit/new')
+})
 
 app.use('/r', subredditRouter);
 app.use('/users', authRoute);

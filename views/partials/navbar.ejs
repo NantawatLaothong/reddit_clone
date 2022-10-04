@@ -1,53 +1,69 @@
 <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Reddit</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#"> <i class="fas fa-home fa-1x"></i> Home</a>
-          </li>
-        </ul>
-        <form class="d-flex mb-2 mb-lg-0" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search Community" aria-label="Search">
-            
-            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-          </form>
-        <ul class="ms-auto mb-2 mb-lg-0">
-
-        </ul>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <% if (signedUser) { %>
-            
-            <li class="nav-item">
-              <a href="submit" class="nav-link">
-                <i class="fas fa-plus fa-1x"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  professorX
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <a class="dropdown-item" href="#">My Profile</a>
-                  <a class="dropdown-item" href="/users/logout">Log out</a>
-                </div>
-              </li>
-          <% } else { %>
-            <li class="nav-item btn btn-log-in px-3 me-2">
-              <a href="/users/login">
-                Log in
-              </a>
-            </li>
-            <li class="nav-item btn btn-primary btn-sign-up px-3">
-              <a href="/users/signup">
-                Sign Up
-              </a>
-            </li>
-            <% } %>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Reddit</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#"> <i class="fas fa-home fa-1x"></i> Home</a>
+        </li>
+        <ul class="nav-item dropdown me-2 mb-2 mb-lg-0">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-plus"></i></i>
+            Create Post
+          </a>
+          <ul class="dropdown-menu">
+            <li><div class="ps-2">Your Communities</div></li>
+            <li><a class="dropdown-item" href="#">Manga</a></li>
+            <li><a class="dropdown-item" href="#">Gaming</a></li>
+            <li><a class="dropdown-item" href="#">Anime</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><div class="ps-2">Feeds</div></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-home fa-1x"></i> Home</a></li>
+            <li><hr class="dropdown divider"></li>
+            <li><div class="ps-2">Other</div></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Settings</a></li>
           </ul>
-      </div>
+        </ul>
+      </ul>
+ 
+      <form class="d-lg-flex flex-row mb-2 mb-lg-0" role="search">
+          <input class="form-control d-flex flex-row me-2" type="search" placeholder="Search Community" aria-label="Search">
+        </form>
+      <ul class="ms-auto mb-2 mb-lg-0">
+
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <% if (signedUser) { %>
+          
+          <li class="nav-item">
+            <a href="submit" class="nav-link">
+              <i class="fas fa-plus fa-1x"></i>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                professorX
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="#">My Profile</a>
+                <a class="dropdown-item" href="/users/logout">Log out</a>
+              </div>
+            </li>
+        <% } else { %>
+          <li class="nav-item btn btn-log-in px-3 me-2">
+            <a href="/users/login">
+              Log in
+            </a>
+          </li>
+          <li class="nav-item btn btn-primary btn-sign-up px-3">
+            <a href="/users/signup">
+              Sign Up
+            </a>
+          </li>
+          <% } %>
+        </ul>
     </div>
-  </nav>
+  </div>
+</nav>

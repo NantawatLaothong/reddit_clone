@@ -1,0 +1,76 @@
+    <%- layout('layouts/boilerplate')  %> 
+      <div class="container">
+        <div class="row mt-5">
+            <div class="col-sm-8">
+             <div class="bg-light px-3 py-3">
+              <p class="p-2 fw-bold fs-5">Create a post</p>
+              <p class="text-primary fw-bold text-end">Drafts(0)</p>
+              <div class="post border border-secondary"></div>
+              <dive class="row mt-2">
+                <div class="col-sm-5 ">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Choose a community</option>
+                        <option value="1">r/Anime</option>
+                        <option value="2">r/Sports</option>
+                        <option value="3">r/Movies</option>
+                        <option value="3">r/Gaming</option>
+                    </select>   
+                </div>
+              </dive>
+              <div class="row mt-2">
+                  <form>
+                    <div class="input-group">
+                        <input type="media" class="form-control" id="InsertMedia" placeholder="Post, Images & Video, Link, Poll, Talk">  
+                    </div>
+                    <div class="row mt-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="PostTitle" placeholder="Title">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="input-group">
+                            <textarea class="form-control" id="PostText" rows="5"></textarea> 
+                        </div>
+                    </div>  
+                  </form>          
+                </div>
+            <div class="col-sm-3">
+                <div class="row mt-2">
+                  <div class="btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btncheck1">+OC</label>
+                  
+                    <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btncheck2">+Spoiler</label>
+                  
+                    <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btncheck3">+NSFW</label>
+                  </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-outline-secondary me-md-2 custom-button-size" type="button">Save Draft</button>
+              <button class="btn btn-secondary custom-button-size" type="button">Post</button>
+            </div>
+          </div>
+        </div>
+          <div class="col-sm-4">
+            <div class="bg-light p-3">
+             <div class="row mt-1">
+                <div class="p-2 fw-bold text-center">
+                    Posting to Reddit
+                </div> 
+             </div>
+                <div class="bg-light"></div>
+                  <p>1. Remember the human</p>
+                  <div class="post border border-secondary"></div>
+                  <p>2. Behave like you would in real life</p>
+                  <div class="post border border-secondary"></div>
+                  <p>3. Look for the original source of content</p>
+                  <div class="post border border-secondary"></div>
+                  <p>4. Search for duplicates before posting</p>
+                  <div class="post border border-secondary"></div>
+                  <p>5. Read the community's rules</p>
+              </div>
+            </div>
+          </div>  

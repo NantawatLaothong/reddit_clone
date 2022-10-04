@@ -2,7 +2,45 @@
 <%- include('../partials/head'); %>
 <body>
 <%- include('../partials/navbar'); %>
-<h3>sub reddit <%= subreddit %></h3>
+<div class="container">
+    <div class="row">
+        <h3>/r/<%= subreddit %>: everything about anime</h3>
+        <div class="col-md-5 offset-md-2">
+            <% posts.forEach(post => { %>
+                <div class="post">
+                    <div class="post-upvote">
+                        <i class="fas fa-arrow-up "></i>
+                        <span>0</span>
+                        <i class="fas fa-arrow-down "></i>
+                    </div>
+                    <div class="post-content">
+                        <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
+                    <h4><%= post.title %></h4>
+                    <p><%= post.body %></p>
+                    <div class="post-info">
+                        <div class="post-info-comments">
+                            <i class="fas fa-comment fa-1x"></i> 0 comments
+                        </div>
+                        <div class="post-info-share">
+                            <i class="fas fa-share fa-1x"></i> Share
+                        </div>
+                        <div class="post-info-bookmark">
+                            <i class="fas fa-bookmark fa-1x"></i> Save
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <div class="col-md-3">
+            <div class="about-community border border-dark mt-3 p-3">
+                <h3>/r/<%= subreddit %></h3>
+                <p>About the community</p>
+                <a class="btn btn-primary" href="/r/<%= subreddit %>/new">Create a Post</a>
+            </div>
+        </div>
+    </div>
+</div>
 <%- include('../partials/footer'); %>
 </body>
 </html>

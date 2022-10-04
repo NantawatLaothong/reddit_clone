@@ -23,6 +23,18 @@ const userSchema = new Schema({
                 filename: String,
         }
     },
+    subreddits: [
+        {
+        type: Schema.Types.ObjectId,
+        ref: 'Subreddit'
+        },
+    ],
+    posts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }
+    ],
 }, { timestamps: true });
 // This will add Username nad password to the schema and some methods to use for authentication 
 // username will be unique
