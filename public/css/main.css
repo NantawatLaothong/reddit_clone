@@ -88,3 +88,22 @@ body {
 .faq {
     background-color: #fff;
 }
+
+
+.comment-item {
+    border-left: 3px black solid;
+}
+.comment-item-image {
+    width: 20%;
+    float: left;
+}
+
+img.comment-item-profile {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.comment-item-body{
+    width: 80%;
+    float: left;
+}

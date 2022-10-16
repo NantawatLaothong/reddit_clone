@@ -15,11 +15,11 @@
                     </div>
                     <div class="post-content">
                         <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
-                    <h4><%= post.title %></h4>
+                    <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %></a></h4>
                     <p><%= post.body %></p>
                     <div class="post-info">
                         <div class="post-info-comments">
-                            <i class="fas fa-comment fa-1x"></i> 0 comments
+                            <a href="/r/<%= subreddit %>/<%= post._id %>"><span><i class="fas fa-comment fa-1x"></i> <%= post.comments.length %>  Comments</span></a>
                         </div>
                         <div class="post-info-share">
                             <i class="fas fa-share fa-1x"></i> Share

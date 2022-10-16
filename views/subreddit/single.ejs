@@ -1,0 +1,102 @@
+<html>
+<%- include('../partials/head'); %>
+<body>
+<%- include('../partials/navbar'); %>
+<div class="container">
+    <div class="row">
+        <h3>/r/<%= subreddit %>: everything about anime</h3>
+        <div class="col-md-5 offset-md-2">
+            
+                <div class="post">
+                    <div class="post-upvote">
+                        <i class="fas fa-arrow-up "></i>
+                        <span>0</span>
+                        <i class="fas fa-arrow-down "></i>
+                    </div>
+                    <div class="post-content">
+                        <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
+                    <h4><a href="#"><%= post.title %></a></h4>
+                    <p><%= post.body %></p>
+                    <div class="post-info">
+                        <div class="post-info-comments">
+                            <i class="fas fa-comment fa-1x"></i> <%= comments.length %>  comments
+                        </div>
+                        <div class="post-info-share">
+                            <i class="fas fa-share fa-1x"></i> Share
+                        </div>
+                        <div class="post-info-bookmark">
+                            <i class="fas fa-bookmark fa-1x"></i> Save
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <div class="row">
+                <p>Comment as  </p>
+                <form action="/r/<%= subreddit %>/<%= post._id %>/comment" method="POST">
+                    <div class="mb-3">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="commentText"></textarea>
+                    </div>
+                    <button class="btn btn-primary">Comment</button>
+                </form>
+            </div>
+            <hr>
+            <div class="row comments">
+                <% comments.forEach(comment => { %>
+                 <div class="comment-item" id="<%= comment._id %> ">
+                    <div class="comment-item-image">
+                        <img class='comment-item-profile' src="https://assets.codepen.io/3283647/internal/avatars/users/default.png?fit=crop&format=auto&height=256&version=1608577514&width=256" alt="">
+                    </div>
+                    <div class="comment-item-body">
+                        <p><span></span><%= comment.user.username %> </p>
+                        <p><%= comment.body %></p>
+                        <div class="comment-item-options d-flex">
+                            <button class="btn addReplyForm" >Reply</button>
+                        </div>
+ 
+                    </div>
+                    <!-- reply form -->
+
+                </div>    
+                <hr>
+                <% }) %>
+                
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="about-community border border-dark mt-3 p-3">
+                <h3>/r/<%= subreddit %></h3>
+                <p>About the community</p>
+                <a class="btn btn-primary" href="/r/<%= subreddit %>/new">Create a Post</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<%- include('../partials/footer'); %>
+<script>
+    $(document).ready(function(){
+        let form = `<div class="row reply">
+                            <form action="/r/<%= subreddit %>/<%= post._id %>/comment" method="POST">
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="commentText"></textarea>
+                                </div>
+                                <button class="btn btn-primary">reply</button>
+                            </form>
+                        </div>`
+        function addReplyForm(){
+        if($(this).parent().parent().hasClass('formDisplayed')){
+            $(this).parent().next().remove();
+            $(this).parent().parent().removeClass('formDisplayed');
+            console.log('deleting')
+        }else{
+            $(this).parent().parent().append(form)
+            $(this).parent().parent().addClass('formDisplayed');
+        }
+    }
+
+    $('.addReplyForm').click(addReplyForm)
+
+    })
+</script>
+</body>
+</html>

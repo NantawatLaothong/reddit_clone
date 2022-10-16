@@ -5,13 +5,37 @@
 </style>
 <body>
 <%- include('./partials/navbar'); %><% if (signedUser) { %>
-    welcome <%= signedUser.username %> 
 <% } %>
 
 <%- include('./partials/footer'); %>
 <div class="container">
     <div class="row">
         <div class="col-md-5 offset-md-2">
+            <% posts.forEach(post => { %>
+                <div class="post">
+                    <div class="post-upvote">
+                        <i class="fas fa-arrow-up "></i>
+                        <span>0</span>
+                        <i class="fas fa-arrow-down "></i>
+                    </div>
+                    <div class="post-content">
+                        <p>r/<%= post.subreddit.r %>  <span>Posted by u/<%= post.user.username %> </span></p>
+                    <h4><%= post.title %> </h4>
+                    <p><%= post.body %> </p>
+                    <div class="post-info">
+                        <div class="post-info-comments">
+                            <i class="fas fa-comment fa-1x"></i> <%= post.comments.length %> comments
+                        </div>
+                        <div class="post-info-share">
+                            <i class="fas fa-share fa-1x"></i> Share
+                        </div>
+                        <div class="post-info-bookmark">
+                            <i class="fas fa-bookmark fa-1x"></i> Save
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <% }) %>
             <div class="post">
                 <div class="post-upvote">
                     <i class="fas fa-arrow-up "></i>
@@ -24,7 +48,7 @@
                 <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/hostedimages/1436585593i/15480918._SX540_.png" alt="" class="img-fluid">
                 <div class="post-info">
                     <div class="post-info-comments">
-                        <i class="fas fa-comment fa-1x"></i> 5 comments
+                        <i class="fas fa-comment fa-1x"></i> 0  comments
                     </div>
                     <div class="post-info-share">
                         <i class="fas fa-share fa-1x"></i> Share
@@ -35,29 +59,7 @@
                 </div>
                 </div>
             </div>
-            <div class="post">
-                <div class="post-upvote">
-                    <i class="fas fa-arrow-up "></i>
-                    <span>2k</span>
-                    <i class="fas fa-arrow-down "></i>
-                </div>
-                <div class="post-content">
-                    <p>r/manga <span>Posted by u/hades2134</span></p>
-                <h4>What manga should I read</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui omnis nihil architecto voluptatum. Porro neque mollitia eaque rerum optio, numquam temporibus laudantium! Vel minus in quae perferendis quis amet ut maiores, dolores doloribus illum, cumque quibusdam unde nesciunt natus? Beatae, magni! Repudiandae sapiente minima officia eaque quidem non eligendi aspernatur!</p>
-                <div class="post-info">
-                    <div class="post-info-comments">
-                        <i class="fas fa-comment fa-1x"></i> 5 comments
-                    </div>
-                    <div class="post-info-share">
-                        <i class="fas fa-share fa-1x"></i> Share
-                    </div>
-                    <div class="post-info-bookmark">
-                        <i class="fas fa-bookmark fa-1x"></i> Save
-                    </div>
-                </div>
-                </div>
-            </div>
+            
     
         </div>
         <div class="col-md-3">
@@ -65,22 +67,23 @@
                 <div class="top-communities border border-dark p-3 mb-3">
                     <h5>Top communities</h5>
                     <ul>
-                        <li>r/Stream</li>
-                        <li>r/Anime</li>
-                        <li>r/Manga</li>
-                        <li>r/dndnext</li>
-                        <li>r/yugioh</li>
+                        <% r.forEach( subreddit => { %>
+                           
+                            <li class="d-flex flex-row justify-content-between p-1">
+                                <img class='subreddit-icon' width="50px" src="https://i.pinimg.com/474x/1c/9f/a9/1c9fa971343023a1dfcf69274b60c2f4.jpg" alt="">
+                                <p>r/<%= subreddit.r %> </p>
+                                <button class="btn btn-primary">Join</button>
+                            </li>
+                        <% }) %>
                     </ul>
                 </div>
                 <div class="recent-posts border border-dark p-3">
                   
                     <div class="">
                         <h4>recent posts</h4>
-                        <p>Lorem ipsum dolor sit amet.</p>
-                        <p>Lorem ipsum dolor sit amet.</p>
-                        <p>Lorem ipsum dolor sit amet.</p>
-                        <p>Lorem ipsum dolor sit amet.</p>
-                        <p>Lorem ipsum dolor sit amet.</p>
+                        <% for( let index = 0; index < 5; index++ ) { %>
+                        <p><%= posts[index].title.slice(0,25)+'...' %></p>
+                    <% } %> 
                     </div>
                 </div>
                 <div class="faq border border-dark p-3">
