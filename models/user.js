@@ -29,6 +29,11 @@ const userSchema = new Schema({
         ref: 'Subreddit'
         },
     ],
+    followedCommunites: [
+        {
+            type: String
+        }
+    ],
     posts: [
         {
             type: Schema.Types.ObjectId,

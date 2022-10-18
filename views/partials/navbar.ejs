@@ -7,7 +7,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"> <i class="fas fa-home fa-1x"></i> Home</a>
+          <% if (url == '/') { %>
+            <a class="nav-link active" aria-current="page" href="#"> <i class="fas fa-home fa-1x"></i> Home</a>
+          <% } else if (url.includes('/r/')) { %>
+            <a class="nav-link active" aria-current="page" href="#"><%= url%> </a>
+          <% } else { %>
+            s
+          <% } %>  
         </li>
         <ul class="nav-item dropdown me-2 mb-2 mb-lg-0">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-plus"></i></i>

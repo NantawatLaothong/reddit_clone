@@ -8,7 +8,7 @@ const Comment = require('../models/comment');
 // localhost:7098/r/new
 router.get('/new', async(req, res)=>{
   try{
-    res.render('subreddit/new')
+    res.render('subreddit/new', {url: req.url})
   } catch(err){
     console.log(err)
     res.send('something went wrong in GET /new')
@@ -50,7 +50,7 @@ router.post('/:subreddit', async(req, res)=>{
 router.get('/:subreddit/new', async(req, res)=>{
   try{
     const r = req.params.subreddit;
-    res.render('submit/new', {r});
+    res.render('submit/new', {r, url: req.url});
   } catch(err){
     console.log(`something went wrong in /:subreddit/new`)
   }
@@ -61,8 +61,9 @@ router.get('/:subreddit', async (req, res)=>{
   try {
     const {subreddit} = req.params
     const r = await Subreddit.findOne({r: subreddit}).populate('posts');
+    // console.log(req.originalUrl);
     if(r){
-      res.render('subreddit/index', {posts: r.posts, subreddit});
+      res.render('subreddit/index', {posts: r.posts, subreddit, url: req.originalUrl});
     } else {
       res.render('subreddit/404', {subreddit})
     }
@@ -85,7 +86,7 @@ router.get('/:subreddit/:id', async(req, res)=>{
     // if(r){
       // console.log(post);
       // res.send('ht')
-      res.render('subreddit/single', {post: post, subreddit, comments});
+      res.render('subreddit/single', {post: post, subreddit, comments, url: req.originalUrl});
     // } else {
       // res.render('subreddit/404', {subreddit})
     // }
@@ -96,7 +97,7 @@ router.get('/:subreddit/:id', async(req, res)=>{
 
 router.get('/submit', async(req, res)=>{
   try{
-    res.render('subreddit/submit')
+    res.render('subreddit/submit', {url: req.url})
   } catch(err) {
     console.log(err)
     res.send('something went wrong in GET /submit')

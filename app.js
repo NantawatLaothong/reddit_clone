@@ -18,7 +18,7 @@ const aws = require('aws-sdk');
 const User = require('./models/user');
 const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
-const url = "mongodb://localhost"
+const url = "mongourl"
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
 const post = require('./models/post');
@@ -78,7 +78,8 @@ app.get('/', async (req, res)=>{
     try {
         const r = await Subreddit.find().limit(5)
         const posts = await Post.find().populate('subreddit').populate('user')
-        res.render('home', {posts, r})
+        console.log(req.url);
+        res.render('home', {posts, r, url: req.url})
     }
     catch(err){
         console.log(err)
