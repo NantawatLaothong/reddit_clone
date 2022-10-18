@@ -47,7 +47,7 @@
                         <img class='comment-item-profile' src="https://assets.codepen.io/3283647/internal/avatars/users/default.png?fit=crop&format=auto&height=256&version=1608577514&width=256" alt="">
                     </div>
                     <div class="comment-item-body">
-                        <p><span></span><%= comment.user.username %> </p>
+                        <p><span></span><%= comment.user.username %> created <%= new Date(comment.createdAt).toDateString() %> </p>
                         <p><%= comment.body %></p>
                         <div class="comment-item-options d-flex">
                             <button class="btn addReplyForm" >Reply</button>

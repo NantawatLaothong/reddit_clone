@@ -63,7 +63,7 @@ router.get('/:subreddit', async (req, res)=>{
     const r = await Subreddit.findOne({r: subreddit}).populate('posts');
     // console.log(req.originalUrl);
     if(r){
-      res.render('subreddit/index', {posts: r.posts, subreddit, url: req.originalUrl});
+      res.render('subreddit/index', {posts: r.posts, r, subreddit, url: req.originalUrl});
     } else {
       res.render('subreddit/404', {subreddit})
     }

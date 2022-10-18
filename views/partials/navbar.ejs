@@ -12,7 +12,7 @@
           <% } else if (url.includes('/r/')) { %>
             <a class="nav-link active" aria-current="page" href="#"><%= url%> </a>
           <% } else { %>
-            s
+            NA
           <% } %>  
         </li>
         <ul class="nav-item dropdown me-2 mb-2 mb-lg-0">
@@ -21,6 +21,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><div class="ps-2">Your Communities</div></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createCommunity"><i class="bi bi-plus-lg"></i> Create a Community</a></li>
             <li><a class="dropdown-item" href="#">Manga</a></li>
             <li><a class="dropdown-item" href="#">Gaming</a></li>
             <li><a class="dropdown-item" href="#">Anime</a></li>
@@ -34,7 +35,7 @@
         </ul>
       </ul>
  
-      <form class="d-lg-flex flex-row mb-2 mb-lg-0" role="search">
+      <form class="d-lg-flex flex-row mb-2 mb-lg-0" method="GET" action="/">
           <input class="form-control d-flex flex-row me-2" type="search" placeholder="Search Community" aria-label="Search">
         </form>
       <ul class="ms-auto mb-2 mb-lg-0">
@@ -64,12 +65,99 @@
             </a>
           </li>
           <li class="nav-item btn btn-primary btn-sign-up px-3">
-            <a href="/users/signup">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#signup">
               Sign Up
             </a>
           </li>
           <% } %>
         </ul>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="createCommunity" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Community</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/r" method="POST">
+        <div class="modal-body">
+          
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Name</label>
+              <input type="text" name="r" class="form-control" id="exampleFormControlInput1" placeholder="r/" maxlength="21">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Description</label>
+              <textarea  class="form-control" name="description" id="descripton" placeholder="Tell us about your community"></textarea>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+              <label class="form-check-label" for="flexRadioDefault1">
+                <i class="bi bi-person-circle"></i> Public
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
+              <label class="form-check-label" for="flexRadioDefault2">
+                <i class="bi bi-eye-slash-fill"></i> Restricted
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
+              <label class="form-check-label" for="flexRadioDefault2">
+                <i class="bi bi-lock-fill"></i> Private
+              </label>
+            </div>
+            <h4>Adult Content</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                18+ year old community
+              </label>
+            </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create Community</button>
+        </div>
+      </form> 
+      </div>
+    </div>
+  </div>
+
+<!-- sign up -->
+  <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form  action="/users" method="POST">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Sign Up</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <label for="username">Pick a username</label>
+              <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Earf@notreddit.com" name="email" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password">Choose a password</label>
+              <input type="password" class="form-control" name="password" aria-describedby='passwordHelp' required>
+              <small id="passwordHelp" class="form-txt text-muted">Min 6 Characters, numbers & letters</small>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </nav>

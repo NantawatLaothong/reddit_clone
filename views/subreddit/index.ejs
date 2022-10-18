@@ -4,7 +4,7 @@
 <%- include('../partials/navbar'); %>
 <div class="container">
     <div class="row">
-        <h3>/r/<%= subreddit %>: everything about anime</h3>
+        <h3>/r/<%= subreddit %>: <%=r.description %> </h3>
         <div class="col-md-5 offset-md-2">
             <% posts.forEach(post => { %>
                 <div class="post">
