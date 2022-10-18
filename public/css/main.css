@@ -107,3 +107,19 @@ img.comment-item-profile {
     width: 80%;
     float: left;
 }
+
+/* views/submit/create post.ejs */
+.custom-button-size {
+    width: 100px !important;
+    margin: 0 auto;
+}
+/* views/partials/navbar.ejs */
+.modal-centering {
+    transform: translateY(25%);
+}
+/* views/partials/navbar.ejs */
+.about {
+    margin: 5;
+    text-align: justify;
+
+  }
