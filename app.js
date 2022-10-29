@@ -18,7 +18,7 @@ const aws = require('aws-sdk');
 const User = require('./models/user');
 const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
-const url = "mongodb://localhost:27017/reddit"
+const url = "mongodb+srv://toru1038:pGXZiaulpJd5sigw@it485db.l8hkt.mongodb.net/?retryWrites=true&w=majority"
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
 const post = require('./models/post');
