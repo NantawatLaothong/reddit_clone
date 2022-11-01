@@ -13,15 +13,19 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const multer = require('multer')
 const multerS3 = require('multer-s3');
-const aws = require('aws-sdk');
 // var favicon = require('serve-favicon');
 const User = require('./models/user');
 const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
-const url = "mongodb+srv://toru1038:pGXZiaulpJd5sigw@it485db.l8hkt.mongodb.net/?retryWrites=true&w=majority"
+const userRoute = require('./routes/users');
+const apiRoute = require('./routes/apis');
+const url = process.env.mongoURL;
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
 const post = require('./models/post');
+const user = require('./models/user');
+const { send } = require('process');
+const cors = require('cors');
 
 // session 
 sessionOptions = {
@@ -30,6 +34,7 @@ sessionOptions = {
     secret:"asvEtt#4215",
 }
 
+app.use(cors())
 app.use(session(sessionOptions))
 app.use(flash())
 
@@ -76,8 +81,22 @@ app.use((req, res, next)=>{
 
 app.get('/', async (req, res)=>{
     try {
+        // if the user logged in
+        if(req.user){
+            const user = await User.findById(req.user._id);
+            // const stringOfFollowedCommunities = user.followedCommunites;
+            // console.log(user.followedCommunities)
+            console.log(user.followedCommunites)
+            const r = await Subreddit.find({r: {$in: user.followedCommunites}});
+            const posts = await Post.find({subreddit: {$in: r}}).populate('subreddit').populate('meta').populate('user').sort({ createdAt: -1 });
+            // console.log('r value')
+            // console.log(r);
+            // console.log('posts value')
+            // console.log(posts);
+            res.render('home', {posts, r, url: req.url})
+        }
         const r = await Subreddit.find().limit(5)
-        const posts = await Post.find().populate('subreddit').populate('user')
+        const posts = await Post.find().populate('subreddit').populate('user').sort({ createdAt: -1 })
         console.log(req.url);
         res.render('home', {posts, r, url: req.url})
     }
@@ -112,7 +131,7 @@ app.get('/submit', async(req,res)=>{
 
 app.use('/r', subredditRouter);
 app.use('/users', authRoute);
-
+app.use('/apis', apiRoute);
 app.listen(port, ()=>{
     console.log(`app is listening on: http://localhost:${port}`);
 })

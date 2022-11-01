@@ -15,28 +15,35 @@
             NA
           <% } %>  
         </li>
-        <ul class="nav-item dropdown me-2 mb-2 mb-lg-0">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-plus"></i></i>
-            Create Post
-          </a>
-          <ul class="dropdown-menu">
-            <li><div class="ps-2">Your Communities</div></li>
-            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createCommunity"><i class="bi bi-plus-lg"></i> Create a Community</a></li>
-            <li><a class="dropdown-item" href="#">Manga</a></li>
-            <li><a class="dropdown-item" href="#">Gaming</a></li>
-            <li><a class="dropdown-item" href="#">Anime</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><div class="ps-2">Feeds</div></li>
-            <li><a class="dropdown-item" href="#"><i class="fas fa-home fa-1x"></i> Home</a></li>
-            <li><hr class="dropdown divider"></li>
-            <li><div class="ps-2">Other</div></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Settings</a></li>
+        <% if (signedUser) { %>
+          <ul class="nav-item dropdown me-2 mb-2 mb-lg-0">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-plus"></i></i>
+              Create Post
+            </a>
+            <ul class="dropdown-menu">
+              <li><div class="ps-2">Your Communities</div></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createCommunity"><i class="bi bi-plus-lg"></i> Create a Community</a></li>
+              <% signedUser.followedCommunites.forEach(community => { %>
+                <li><a class="dropdown-item" href="/r/<%= community %>">r/<%= community %> </a></li>
+              <% }) %>
+              
+            
+              <li><hr class="dropdown-divider"></li>
+              <li><div class="ps-2">Feeds</div></li>
+              <li><a class="dropdown-item" href="/"><i class="fas fa-home fa-1x"></i> Home</a></li>
+              <li><hr class="dropdown divider"></li>
+              <li><div class="ps-2">Other</div></li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Settings</a></li>
+            </ul>
           </ul>
-        </ul>
+        
+        <% } %>
       </ul>
- 
-      <form class="d-lg-flex flex-row mb-2 mb-lg-0" method="GET" action="/">
-          <input class="form-control d-flex flex-row me-2" type="search" placeholder="Search Community" aria-label="Search">
+      
+      <form class=" mb-2 mb-lg-0" method="GET" action="/">
+          <div class="search-autocomplete">
+            <input style="color: #D7DADC;" class="form-control me-2" type="search" id="search-input" placeholder="Search Community" aria-label="Search">
+          </div>
         </form>
       <ul class="ms-auto mb-2 mb-lg-0">
 
@@ -54,7 +61,7 @@
                 <img class="comment-item-profile" src="https://assets.codepen.io/3283647/internal/avatars/users/default.png?fit=crop&format=auto&height=256&version=1608577514&width=256" alt=""><%= signedUser.username %> 
               </a>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#">My Profile</a>
+                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profile">My Profile</a>
                 <a class="dropdown-item" href="/users/logout">Log out</a>
               </div>
             </li>
@@ -63,10 +70,10 @@
             <a href="/users/login">
               Log in
             </a> -->
-            <li class="nav-item btn btn-primary btn-sign-up px-3">
+            <li class="nav-item btn btn-nav btn-sign-up px-3">
             <a href="" data-bs-toggle="modal" data-bs-target="#login" >Login</a>
           </li>
-          <li class="nav-item btn btn-primary btn-sign-up px-3">
+          <li class="nav-item btn btn-nav btn-sign-up px-3">
             <a href="#" data-bs-toggle="modal" data-bs-target="#signup">
               Sign Up
             </a>
@@ -163,6 +170,38 @@
     </div>
   </div>
 
+  <!-- profile -->
+  <% if (signedUser) { %>
+    <div class="modal fade" id="profile" tabindex="-1" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Profile</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Username: <%= signedUser.username %> </p>
+                <p>Edit Your Profile:</p>
+                <form action="">
+                  <div class="mb-3">
+                    <label for="formFile" class="form-label">Default file input example</label>
+                    <input class="form-control" type="file" id="formFile">
+                  </div>
+                  <div class="">
+                    <label for="textarea">Bio:</label>
+                    <textarea name="" id="" cols="30" rows="5"></textarea>
+                  </div>
+                </form>
+            </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+      </div>
+    </div>
+  
+  <% } %>
+ 
   <!-- login Tom -->
   <div class="modal fade modal-centering" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -18,10 +18,11 @@
                 </div>
               </dive>
               <div class="row mt-2">
-                  <form action="/r/<%= r %>" method="POST">
-                    <div class="input-group">
-                        <input type="media" class="form-control" id="InsertMedia" placeholder="Post, Images & Video, Link, Poll, Talk">  
-                    </div>
+                  <form action="/r/<%= r %>" method="POST" enctype="multipart/form-data">
+                    <div class="input-group custom-file mt-3">
+                      <input type="file" name="image" class="" required/>
+                      <label class="custom-file-label" for="image">file</label>
+                  </div>
                     <div class="row mt-3">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Title" name="title">

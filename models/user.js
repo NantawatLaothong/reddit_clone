@@ -45,7 +45,18 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Comment'
         }
+    ],
+    upvotes:[
+        {
+            type: String
+        }
+    ],
+    down_votes: [
+        {
+            type: String
+        }
     ]
+
 }, { timestamps: true });
 // This will add Username nad password to the schema and some methods to use for authentication 
 // username will be unique

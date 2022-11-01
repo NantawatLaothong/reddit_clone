@@ -32,7 +32,7 @@ router.post('/', async(req, res)=>{
 router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect:'/users/login'}), async(req, res)=>{
     try{
         console.log('logged in')
-        console.log(req.user)
+        // console.log(req.user)
         res.redirect('/');
     } catch(err){
         console.log('error occued in /users/login');
@@ -47,5 +47,13 @@ router.get('/logout', async(req, res)=>{
         }
     });
     res.redirect('/')
+})
+
+router.get('/', async(req, res)=>{
+    try{
+        res.render('users/index', {url: req.url})
+    } catch(err){
+        res.send(err)
+    }
 })
 module.exports = router;

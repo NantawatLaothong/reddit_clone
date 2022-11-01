@@ -60,7 +60,8 @@ body {
 }
 
 .post {
-    border: 1px solid black;
+    border: 1px solid hsla(0,0%,100%,0.2);
+    border-radius: 5px;
     margin: 10px 0px;
     padding: 5px;
     display: flex;
@@ -123,3 +124,189 @@ img.comment-item-profile {
     text-align: justify;
 
   }
+
+.user-blue {
+    background: rgb(9, 145, 243);
+    height: 100px;
+}
+
+
+.user-btn {
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+/* autocomplete */
+.search-autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: inline-block;
+    width: 300px;
+  }
+
+#search-input {
+    background-color: #272729;
+    /* border-radius: 999px; */
+}
+
+
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #272729;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #212121;
+}
+
+.text-dark{
+    color:#D7DADC !important;
+}
+
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+/* dark mode */
+body{
+    background-color: #030303;
+    /* background-color: #1A1A1B; */
+}
+
+.post {
+    background-color: #1A1A1B;
+}
+
+.post-content{
+    width: 100%;
+}
+
+.post a {
+    color: #D7DADC;
+    text-decoration: none;
+}
+
+.post span {
+    color: #6f7071
+}
+
+.post:hover {
+    border-color: #fff;
+}
+
+.post p {
+    color:   #D7DADC
+}
+.community-text  {
+    color: #D7DADC!important; 
+}
+/* community color text :#D7DADC */
+
+.navbar {
+    background-color: #1A1A1B !important;
+    color: #D7DADC !important;
+}
+
+.navbar a {
+    color: #D7DADC !important;
+}
+
+.top-communities{
+    background-color: #1A1A1B;
+    color: #D7DADC;
+}
+
+.recent-posts {
+    background-color: #1A1A1B;
+    color: #D7DADC;
+}
+
+.faq {
+    background-color: #1A1A1B;
+    color: #D7DADC;
+}
+
+.faq-create a{
+ width: 90%;
+}
+
+a.faq-create-community {
+    background: #030303 !important;
+    border-color: #d4d4d4;
+    color: #d4d4d4;
+}
+a.faq-create-post {
+    background: #D7DADC !important;
+}
+
+.btn-dark{
+    background-color: #D7DADC;
+    color: #030303;
+    height: 40px;
+}
+
+.btn-nav {
+    background-color: #272729 !important;
+}
+
+a.faq-create-post:hover {
+    color: #030303;
+}
+
+.subreddit-page{
+    background-color: #272729;
+    color: #D7DADC;
+}
+
+.about-community {
+    background: #030303 !important;
+    border-color: #d4d4d4;
+    color: #d4d4d4;
+}
+
+hr {
+    color :#fff;
+}
+
+.icon-image {
+    border-radius: 999px;
+    height: 40px;
+    width: 40px;
+}
+
+.subreddit-image {
+    border-radius: 999px;
+    height: 100px;
+    width: 100px;
+    border: 2px solid #D7DADC;
+}

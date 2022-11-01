@@ -4,8 +4,56 @@
 <%- include('../partials/navbar'); %>
 <div class="container">
     <div class="row">
-        <h3>/r/<%= subreddit %>: <%=r.description %> </h3>
-        <div class="col-md-5 offset-md-2">
+        <div class="col-md-10 offset-md-1 my-2 py-3 subreddit-page">
+            <% if (r.iconURL) { %>
+                <img class="subreddit-image" src="<%= r.iconURL.url %>"  alt="" />
+            <% } else {%>
+                <img class="subreddit-image" src="https://pbs.twimg.com/media/DBpNc2ZWsAA_Z71.jpg" alt="" style="width:100px; border-radius:100%">
+            <% } %> 
+            <span class="h3">/r/<%= subreddit %></span>
+            <span >
+            <% if (signedUser && signedUser.followedCommunites.includes(subreddit)) { %>
+                <a class="btn btn-dark px-4" href="/r/<%= subreddit %>/leave">Leave</a>
+            <% } else { %>
+                <a class="btn btn-dark   px-4" href="/r/<%= subreddit %>/follow">Join</a>
+            <% } %>
+            </a></span>
+            <span><a class='btn btn-success' href="#" data-bs-toggle="modal" data-bs-target="#edit-community">Edit</a></span>
+
+            <!-- edit community -->
+            <div class="modal fade" id="edit-community" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit r: <%= subreddit %> </h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/r/<%= subreddit %>/?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput1" class="form-label">Name</label>
+                          <input type="text" name="r" class="form-control" id="exampleFormControlInput1" placeholder="r/<%= subreddit %> " maxlength="21">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Icon for the subreddit</label>
+                            <input class="form-control" type="file" name="subreddit-icon" id="subreddit-icon">
+                          </div>
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput1" class="form-label">Description</label>
+                          <textarea  class="form-control" name="description" id="descripton" placeholder="Tell us about your community"><%= r.description %> </textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                  </form> 
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-6 offset-md-1">
             <% posts.forEach(post => { %>
                 <div class="post">
                     <div class="post-upvote">
@@ -16,7 +64,15 @@
                     <div class="post-content">
                         <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
                     <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %></a></h4>
-                    <p><%= post.body %></p>
+                    <% if (post.body) { %>
+                        <p><%= post.body %></p>
+                    <% } else if(post.imageURL){ %>
+                        <div class="post-image text-center">
+                            <img class='img-fluid' src="<%= post.imageURL.url %>" alt="">
+                        </div>
+                        
+                    <% } %> 
+                    
                     <div class="post-info">
                         <div class="post-info-comments">
                             <a href="/r/<%= subreddit %>/<%= post._id %>"><span><i class="fas fa-comment fa-1x"></i> <%= post.comments.length %>  Comments</span></a>
@@ -34,9 +90,12 @@
         </div>
         <div class="col-md-3">
             <div class="about-community border border-dark mt-3 p-3">
-                <h3>/r/<%= subreddit %></h3>
-                <p>About the community</p>
-                <a class="btn btn-primary" href="/r/<%= subreddit %>/new">Create a Post</a>
+                <h5>About the community</h5>
+                <p><%= r.description %> </p>
+                <hr>
+                <p>Members: <%= r.followers.length %> </p>
+                <hr>
+                <a class="btn btn-dark" href="/r/<%= subreddit %>/new">Create a Post</a>
             </div>
         </div>
     </div>

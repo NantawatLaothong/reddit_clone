@@ -8,6 +8,10 @@ const subredditSchema = new Schema({
         type: String,
         required: true,
     },
+    iconURL: {
+        url: String,
+        filename: String
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -28,6 +32,9 @@ const subredditSchema = new Schema({
             ref: 'Post'
         }
     ],
+    followers: [
+        String
+    ]
 }, { timestamps: true });
 // This will add Username nad password to the schema and some methods to use for authentication 
 // username will be unique

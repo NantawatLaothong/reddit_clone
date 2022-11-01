@@ -13,11 +13,17 @@ const postSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+
     meta: {
         tags: [
             {type: String}
         ],
-        votes: Number
+        upvotes: [
+            String
+        ],
+        down_votes: [
+            String
+        ],
     },
     body: {
         type: String
@@ -27,7 +33,11 @@ const postSchema = new mongoose.Schema({
             type: Schema.Types.ObjectId,
             ref: 'Comment'
         },
-    ]
+    ],
+    imageURL: {
+        url: String,
+        filename: String
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Post', postSchema);
