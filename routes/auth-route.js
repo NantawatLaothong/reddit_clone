@@ -23,7 +23,7 @@ router.post('/', async(req, res)=>{
         user.Bio.profileImage.url = 'https://dev-app-clone-994214.s3.amazonaws.com/1646642994810__cat.jpg';
         const registeredUser = await User.register(user, password);
         await registeredUser.save();
-        res.redirect('/users/login');
+        res.redirect('/');
     } catch(err){
         res.send('some error occured')
     }

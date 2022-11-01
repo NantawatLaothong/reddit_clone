@@ -256,6 +256,11 @@ body{
     color: #D7DADC;
 }
 
+.dark-mode {
+    background-color: #1A1A1B;
+    color: #D7DADC;
+}
+
 .faq-create a{
  width: 90%;
 }

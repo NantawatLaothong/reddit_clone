@@ -85,7 +85,7 @@ router.post('/:subreddit', upload.single('image'), async(req, res)=>{
 router.get('/:subreddit/new', async(req, res)=>{
   try{
     const r = req.params.subreddit;
-    res.render('submit/new', {r, url: req.url});
+    res.render('submit/new', {r: r, url: req.url});
   } catch(err){
     console.log(`something went wrong in /:subreddit/new`)
   }
