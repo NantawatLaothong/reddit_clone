@@ -36,9 +36,13 @@
           <div style="height: 100px; background-color: rgba(113, 103, 103, 0.52);"></div>
           <div class="post border border-dark"></div>
           <div style="height: 100px; background-color: rgba(113, 103, 103, 0.52);"></div>
-          <div class="text-center">
+          <!-- if(user.posts) -->
+          <% if (!user.posts) { %>
+            <div class="text-center">
             hmm... u/FunWork47 hasn't posted anything
           </div>
+          <% } %>
+          
           <div class="post border border-dark"></div>
           <div style="height: 100px; background-color: rgba(113, 103, 103, 0.52);"></div>
           <div class="post border border-dark"></div>
@@ -56,8 +60,8 @@
           <div class="top-communities border border-secondary">
               <div class="user-blue"></div>
               <div class="text-center user-profile">
-                <h2>FunWork47</h2>
-                <p>u/FunWork47.1m</p>
+                <h2><%= signedUser.username %> </h2>
+                <p>u/<%= signedUser.username %></p>
               </div>
               <div class="text-center">
                 <button type="button" class="user-btn btn btn-danger btn-sm">Style Avatar</button>

@@ -19,7 +19,7 @@ const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/users');
 const apiRoute = require('./routes/apis');
-const url = "process.env.mongoURL";
+const url = "localhost";
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
 const post = require('./models/post');
@@ -88,7 +88,8 @@ app.get('/', async (req, res)=>{
             // console.log(user.followedCommunities)
             console.log(user.followedCommunites)
             const r = await Subreddit.find({r: {$in: user.followedCommunites}});
-            const posts = await Post.find({subreddit: {$in: r}}).populate('subreddit').populate('meta').populate('user').sort({ createdAt: -1 });
+            // find 5 posts
+            const posts = await Post.find({subreddit: {$in: r}}).populate('subreddit').populate('meta').populate('user').sort({ createdAt: -1 }).limit(5);
             // console.log('r value')
             // console.log(r);
             // console.log('posts value')
@@ -96,7 +97,8 @@ app.get('/', async (req, res)=>{
             res.render('home', {posts, r, url: req.url})
         }
         const r = await Subreddit.find().limit(5)
-        const posts = await Post.find().populate('subreddit').populate('user').sort({ createdAt: -1 })
+        // find 5 post
+        const posts = await Post.find().populate('subreddit').populate('user').sort({ createdAt: -1 }).limit(5)
         console.log(req.url);
         res.render('home', {posts, r, url: req.url})
     }
@@ -131,6 +133,7 @@ app.get('/submit', async(req,res)=>{
 
 app.use('/r', subredditRouter);
 app.use('/users', authRoute);
+app.use('/u', userRoute);
 app.use('/apis', apiRoute);
 app.listen(port, ()=>{
     console.log(`app is listening on: http://localhost:${port}`);
