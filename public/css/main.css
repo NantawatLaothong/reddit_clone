@@ -58,6 +58,10 @@ body {
     flex-direction: row;
     gap: 20px;
 }
+/*save button color change*/
+.post-info-bookmark {
+    color: #d7dadc98;
+}
 
 .post {
     border: 1px solid hsla(0,0%,100%,0.2);
@@ -238,7 +242,7 @@ body{
 }
 
 .navbar a {
-    color: #D7DADC !important;
+    color: #D7DADC;
 }
 
 .top-communities{
@@ -314,4 +318,22 @@ hr {
     height: 100px;
     width: 100px;
     border: 2px solid #D7DADC;
+}
+
+/*comment text color */
+.comment-item-body {
+    color: #D7DADC;
+}
+
+.addReplyForm {
+    color: #d7dadc98;
+}
+
+/*drop down text color*/
+.dropdown-item {
+    color: #585858 !important;
+}
+
+.nav-link {
+    color: #D7DADC !important;
 }

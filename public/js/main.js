@@ -13,6 +13,23 @@ var debounce = function (func, wait, immediate) {
     };
 };
 
+// const getMorePosts = (page)=>{
+//     const posts 
+//     $.get(`http://localhost:7098/apis/r/anime/${page}`, (post)=>{
+        
+//     })
+// }
+
+let page = 1
+
+$('.loadMorePost').click(function(){
+    console.log('clicked')
+    // let div = document.createElement('DIV')
+    $.get(`http://localhost:7098/apis/r/anime/${page}`, (posts)=>{
+        console.log(posts)
+    })
+    page += 1
+})
 
 $('#search-input').keyup(debounce(function(){
     const term = $('#search-input').val();
