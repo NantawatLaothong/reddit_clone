@@ -34,6 +34,38 @@ const upload = multer({
     })
 });
 
+isLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+      // req.flash('error', 'You must be singed in first!')
+      return res.redirect('/users/login');
+  }
+  // call next if the user is authenticated
+  next();
+}
+
+isAuthortized = async (req, res, next) => {
+  const {id} = req.params
+  // find the user that 
+  const user = await User.findById(req.params.id);
+  if(!user.equals(req.user._id)){
+      req.flash('error', "You do not have the permission!")
+      return res.redirect(`/`)
+    }
+    next();
+}
+
+isAuthor = async (req, res, next) => {
+  const {id} = req.params;
+  // find the user that 
+  const post = await Post.findById(id);
+  if(!post.user.equals(req.user._id)){
+      req.flash('error', "You do not have the permission!")
+      return res.redirect(`/`)
+    }
+    next();
+}
+
+
 // new community page  
 // localhost:7098/r/new
 router.get('/new', async(req, res)=>{
@@ -82,7 +114,7 @@ router.post('/:subreddit', upload.single('image'), async(req, res)=>{
   }
 })
 // router
-router.get('/:subreddit/new', async(req, res)=>{
+router.get('/:subreddit/new', isLoggedIn, async(req, res)=>{
   try{
     const r = req.params.subreddit;
     res.render('submit/new', {r: r, url: req.url});
@@ -91,7 +123,7 @@ router.get('/:subreddit/new', async(req, res)=>{
   }
 })
 
-router.get('/:subreddit/follow', async(req, res)=>{
+router.get('/:subreddit/follow', isLoggedIn, async(req, res)=>{
   try{
     const {subreddit} = req.params
     if(req.user){
@@ -204,6 +236,39 @@ router.get('/:subreddit/:id', async(req, res)=>{
     res.send('something went wrong in Get /:subreddit/:id')
   }
 });
+
+// Bookmarking a post
+router.get('/:subreddit/:id/bookmark', isLoggedIn, async(req, res)=>{
+  try {
+    const {subreddit, id} = req.params
+    // const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', match: {"_id": id}});
+    const post = await Post.findOne({_id:id});
+    const user = await User.findById(req.user._id);
+    user.bookmarked_posts.push(post._id);
+    await user.save();
+    req.flash('success', 'Post bookmarked')
+      res.redirect('back');
+  } catch(err){
+    res.send('something went wrong in Get /:subreddit/:id/bookmark')
+  }
+});
+
+// unbookmark
+router.get('/:subreddit/:id/unbookmark', isLoggedIn, async(req, res)=>{
+  try {
+    const {subreddit, id} = req.params
+    // const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', match: {"_id": id}});
+    const post = await Post.findOne({_id:id});
+    const user = await User.findById(req.user._id);
+    user.bookmarked_posts.pull(post._id);
+    await user.save();
+    req.flash('success', 'Post unbookmarked')
+      res.redirect('back');
+  } catch(err){
+    res.send('something went wrong in Get /:subreddit/:id/bookmark')
+  }
+});
+
 // await Subreddit.find({r: {$in: user.followedCommunites}});
 // upvote and downvote
 router.get('/:subreddit/:id/upvote', async(req, res)=>{
@@ -273,7 +338,7 @@ router.get('/:subreddit/:id/downvote', async(req, res)=>{
 
 router.get('/submit', async(req, res)=>{
   try{
-    res.render('subreddit/submit', {url: req.url})
+    res.render('subreddit/submit', {url: req.url, r: a})
   } catch(err) {
     console.log(err)
     res.send('something went wrong in GET /submit')

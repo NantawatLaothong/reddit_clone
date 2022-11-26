@@ -17,22 +17,24 @@ router.post('/', async(req, res)=>{
     try{
         const {email, username, password} = req.body;
         const user = new User({
-            email,
-            username
+            // convert email and username to lowercase
+            email : email.toLowerCase(),
+            username: username.toLowerCase()
         });
         user.Bio.profileImage.url = 'https://dev-app-clone-994214.s3.amazonaws.com/1646642994810__cat.jpg';
         const registeredUser = await User.register(user, password);
         await registeredUser.save();
+        req.flash('success', `User created successfully`);
         res.redirect('/');
     } catch(err){
-        res.send('some error occured')
+        req.flash('error', 'username or email is already taken')
+        res.redirect('/')
     }
 })
 
-router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect:'/users/login'}), async(req, res)=>{
+router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect:'/'}), async(req, res)=>{
     try{
-        console.log('logged in')
-        // console.log(req.user)
+        req.flash('success', 'Logged in!');
         res.redirect('/');
     } catch(err){
         console.log('error occued in /users/login');
@@ -41,12 +43,18 @@ router.post('/login', passport.authenticate('local', {failureFlash: true, failur
 })
 
 router.get('/logout', async(req, res)=>{
-    req.logout((err)=>{
+    try{
+            req.logout((err)=>{
+                req.flash('success', 'Logged Out!');
+                res.redirect('/')
         if(err){
             console.log('error in logout')
         }
     });
-    res.redirect('/')
+       
+    } catch(err) {
+        console.log('error in /logout')
+    }
 })
 
 router.get('/', async(req, res)=>{

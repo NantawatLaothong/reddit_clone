@@ -19,7 +19,7 @@ const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/users');
 const apiRoute = require('./routes/apis');
-const url = 'localhost';
+const url = "localhost"
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
 const post = require('./models/post');
@@ -112,8 +112,11 @@ app.get('/', async (req, res)=>{
 // to create a subreddit
 app.post('/r', async(req, res)=>{
     try{
-      const body = req.body;
-      console.log(req.body);
+      const body = {
+        r: req.body.r.toLowerCase(),
+        description: req.body.description    
+    };
+      console.log(body);
       const user = await User.findById(req.user._id);
       const subreddit = new Subreddit(body)
       user.subreddits.push(subreddit)

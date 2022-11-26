@@ -40,6 +40,11 @@ const userSchema = new Schema({
             ref: 'Post'
         }
     ],
+    // for keeping bookmarked post id
+    bookmarked_posts: [
+        String
+    ]
+        ,
     comments:[
         {
             type: Schema.Types.ObjectId,

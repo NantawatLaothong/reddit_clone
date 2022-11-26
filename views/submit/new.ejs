@@ -4,21 +4,25 @@
             <div class="col-sm-8">
              <div class="bg-light px-3 py-3">
               <p class="p-2 fw-bold fs-5">Create a post</p>
-              <p class="text-primary fw-bold text-end">Drafts(0)</p>
+              <!-- <p class="text-primary fw-bold text-end">Drafts(0)</p> -->
               <div class="post border border-secondary"></div>
               <dive class="row mt-2">
                 <div class="col-sm-5 ">
                     <select class="form-select" aria-label="Default select example">
-                        <option selected>Choose a community</option>
-                        <option value="1">r/Anime</option>
+                        <option selected>r/<%= r %> </option>
+                        <!-- <option value="1">r/Anime</option>
                         <option value="2">r/Sports</option>
                         <option value="3">r/Movies</option>
-                        <option value="3">r/Gaming</option>
+                        <option value="3">r/Gaming</option> -->
                     </select>   
                 </div>
               </dive>
               <div class="row mt-2">
-                  <form action="/r/<%= r %>" method="POST" enctype="multipart/form-data">
+                  <% if (r) { %>
+                    <form action="/r/<%= r %>" method="POST" enctype="multipart/form-data">
+                  <% } else { %>
+                    <form action="/r" method="POST" enctype="multipart/form-data"></form>
+                  <%   } %> 
                     <div class="input-group custom-file mt-3">
                       <input type="file" name="image" class="" required/>
                       <label class="custom-file-label" for="image">file</label>
@@ -33,7 +37,8 @@
                             <textarea class="form-control" id="PostText" rows="5" name="body"></textarea> 
                         </div>
                     </div>  
-                    <div class="col-sm-3">
+                    <!-- tags -->
+                    <!-- <div class="col-sm-3">
                         <div class="row mt-2">
                           <div class="btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
                             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
@@ -46,10 +51,11 @@
                             <label class="btn btn-outline-secondary" for="btncheck3">+NSFW</label>
                           </div>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button class="btn btn-outline-secondary me-md-2 custom-button-size" type="button">Save Draft</button>
-                      <button class="btn btn-secondary custom-button-size" type="submit">Post</button>
+                      <!-- saving draft not implemented -->
+                      <!-- <button class="btn btn-outline-secondary me-md-2 custom-button-size" type="button">Save Draft</button> -->
+                      <button class="btn btn-secondary custom-button-size mt-3" type="submit">Post</button>
                     </div>
                   </div>
                   </form>          

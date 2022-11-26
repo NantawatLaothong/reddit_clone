@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Def Not Reddit</a>
+    <a class="navbar-brand" href="/">Foramu</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,7 +8,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <% if (url == '/') { %>
-            <a class="nav-link active" aria-current="page" href="#"> <i class="fas fa-home fa-1x"></i> Home</a>
+            <a class="nav-link active" aria-current="page" href="/"> <i class="fas fa-home fa-1x"></i> Home</a>
           <% } else if (url.includes('/r/')) { %>
             <a class="nav-link active" aria-current="page" href="#"><%= url%> </a>
           <% } else { %>
@@ -31,9 +31,9 @@
               <li><hr class="dropdown-divider"></li>
               <li><div class="ps-2">Feeds</div></li>
               <li><a class="dropdown-item" href="/"><i class="fas fa-home fa-1x"></i> Home</a></li>
-              <li><hr class="dropdown divider"></li>
-              <li><div class="ps-2">Other</div></li>
-              <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Settings</a></li>
+              <!-- <li><hr class="dropdown divider"></li> -->
+              <!-- <li><div class="ps-2">Other</div></li> -->
+              <!-- <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i> Settings</a></li> -->
             </ul>
           </ul>
         
@@ -51,17 +51,13 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <% if (signedUser) { %>
           
-          <li class="nav-item">
-            <a href="submit" class="nav-link">
-              <i class="fas fa-plus fa-1x"></i>
-            </a>
-          </li>
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="comment-item-profile" src="<%= signedUser.Bio.profileImage.url %> " alt=""><%= signedUser.username %> 
               </a>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profile">My Profile</a>
+                <a class="dropdown-item" href="/u/profile">My Profile</a>
+                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profile">Edit Profile</a>
                 <a class="dropdown-item" href="/users/logout">Log out</a>
               </div>
             </li>
@@ -101,7 +97,7 @@
               <label for="exampleFormControlInput1" class="form-label">Description</label>
               <textarea  class="form-control" name="description" id="descripton" placeholder="Tell us about your community"></textarea>
             </div>
-            <div class="form-check">
+            <!-- <div class="form-check">
               <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
               <label class="form-check-label" for="flexRadioDefault1">
                 <i class="bi bi-person-circle"></i> Public
@@ -118,7 +114,7 @@
               <label class="form-check-label" for="flexRadioDefault2">
                 <i class="bi bi-lock-fill"></i> Private
               </label>
-            </div>
+            </div> -->
             <h4>Adult Content</h4>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

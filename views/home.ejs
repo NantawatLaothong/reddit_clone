@@ -10,6 +10,7 @@
 
 <%- include('./partials/footer'); %>
 <div class="container">
+    <%- include('./partials/flash')  %> 
     <div class="row">
         <div class="col-md-6 offset-md-1">
             <% posts.forEach(post => { %>
@@ -45,7 +46,12 @@
                             </div>
                         </div>
                         <div class="post-info-bookmark">
-                            <i class="fas fa-bookmark fa-1x"></i> Save
+                            <% if(signedUser && signedUser.bookmarked_posts.includes(post._id)) { %>
+                                <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/unbookmark"><i class="fas fa-bookmark fa-1x"></i> Unsave</a>
+                            <% } else { %>     
+                            <!-- signedUser.followedCommunites.includes(subreddit) -->
+                            <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                            <% }  %> 
                         </div>
                     </div>
                     </div>
@@ -72,7 +78,7 @@
                                 <% }else{ %>
                                 <img class='icon-image' width="50px" src="https://i.pinimg.com/474x/1c/9f/a9/1c9fa971343023a1dfcf69274b60c2f4.jpg" alt="">
                                 <% } %> 
-                                <p>r/<%= subreddit.r %> </p>
+                                <a href="r/<%= subreddit.r %>">r/<%= subreddit.r %> </a>
                                 <% if (signedUser) { %>
                                 <a class="btn btn-dark" href="/r/<%= subreddit.r %>/leave">Leave</a>
                                 <% } else {%>
@@ -96,8 +102,10 @@
                     <h4>Home</h4>
                     <p>Your personal Reddit frontpage. Come here to check in with your favorite communities.</p>
                     <div class="faq-create text-center">
-                        <a href="/submit" class="btn btn-block faq-create-post mb-3">Create a Post</a>
-                        <a href="r/new" class="btn faq-create-community btn-block">Create Community</a>
+                        <!-- not needed -->
+                        <!-- <a href="/submit" class="btn btn-block faq-create-post mb-3">Create a Post</a> -->
+                        <!-- <a href="r/new" class="btn faq-create-community btn-block">Create Community</a> -->
+                        <a href="#" class="btn faq-create-community btn-block" data-bs-toggle="modal" data-bs-target="#createCommunity">Create Community</a>
                     </div>
                 </div>
             </div>

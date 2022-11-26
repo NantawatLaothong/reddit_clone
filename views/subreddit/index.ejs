@@ -3,6 +3,7 @@
 <body>
 <%- include('../partials/navbar'); %>
 <div class="container">
+    <%- include('../partials/flash')  %> 
     <div class="row">
         <div class="col-md-10 offset-md-1 my-2 py-3 subreddit-page">
             <% if (r.iconURL) { %>
@@ -15,11 +16,16 @@
             <% if (signedUser && signedUser.followedCommunites.includes(subreddit)) { %>
                 <a class="btn btn-dark px-4" href="/r/<%= subreddit %>/leave">Leave</a>
             <% } else { %>
+                <% if (signedUser){ %>
                 <a class="btn btn-dark   px-4" href="/r/<%= subreddit %>/follow">Join</a>
+                <%} %>
             <% } %>
             </a></span>
-            <span><a class='btn btn-success' href="#" data-bs-toggle="modal" data-bs-target="#edit-community">Edit</a></span>
-
+            <!-- if the signedUser and the creator of the subreddit is the same user show this edit button -->
+            <% if (signedUser && r.creator._id.equals(signedUser._id)) { %>
+                <span><a class='btn btn-success' href="#" data-bs-toggle="modal" data-bs-target="#edit-community">Edit</a></span>
+            <% } %>
+           
             <!-- edit community -->
             <div class="modal fade" id="edit-community" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

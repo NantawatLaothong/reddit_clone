@@ -34,6 +34,15 @@ const upload = multer({
     })
 });
 
+isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        // req.flash('error', 'You must be singed in first!')
+        return res.redirect('/users/login');
+    }
+    // call next if the user is authenticated
+    next();
+  }
+
 // router.get('/', async(req, res)=>{
 //     try{
 //         res.render('users/index')
@@ -42,10 +51,21 @@ const upload = multer({
 //     }
 // })
 
-router.get('/profile', async(req, res)=>{
+router.get('/profile', isLoggedIn, async(req, res)=>{
     try{
         const user = await User.findById(req.user._id);
-        res.render('users/index', { url : req.url, user})
+        let posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit')
+        if(req.query.bookmarked=='true'){
+            console.log(req.query)
+            posts = await Post.find({'_id': { $in : user.bookmarked_posts}}).sort({'createdAt': -1}).populate('subreddit');
+        }
+        // if(req.query){
+        //     // const posts = await Post.findMany({'_id': { $all : ['636443d1ca6c37fe280bea8d']}});
+        //     const posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit')
+        // } else {
+            // const posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit')
+        // }
+            res.render('users/index', { url : req.url, user, posts})
     } catch(err){
         console.log(err)
     }
