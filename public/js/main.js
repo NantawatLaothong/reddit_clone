@@ -54,11 +54,11 @@ $('.loadMorePost').click(function(){
         let url;
         if(document.cookie){
             let username = document.cookie.split('=')[1];
-            url = `http://localhost:7098/apis/news/${page}?username=${username}`
+            url = `http://localhost:7098/apis/posts?page=${page}&username=${username}`
             console.log(url);
             // get the username from cookie
         } else {
-            url = `http://localhost:7098/apis/news/${page}`;
+            url = `http://localhost:7098/apis/posts?page=${page}`;
         }
         $.get(url, (posts)=>{
             if(posts.length == 0){
@@ -137,7 +137,7 @@ $('.loadMorePost').click(function(){
                 $('.loadMorePost').before(postDiv)
             });
             page += 1
-            $.get(`http://localhost:7098/apis/news/${page}`, (posts)=>{
+            $.get(`http://localhost:7098/apis/posts?page=${page}`, (posts)=>{
                 if(posts.length == 0){
                     $('.loadMorePost').remove();
                 }
@@ -148,7 +148,8 @@ $('.loadMorePost').click(function(){
     }else{
         let r = $('.loadMorePost').attr('data');
         // let div = document.createElement('DIV')
-        $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
+        // $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
+        $.get(`http://localhost:7098/apis/posts?r=${r}&page=${page}`, (posts)=>{
             if(posts.length == 0){
                 $('.loadMorePost').remove();
             }
@@ -225,7 +226,7 @@ $('.loadMorePost').click(function(){
                 $('.loadMorePost').before(postDiv)
             });
             page += 1
-            $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
+            $.get(`http://localhost:7098/apis/posts?r=${r}&page=${page}`, (posts)=>{
                 if(posts.length == 0){
                     $('.loadMorePost').remove();
                 }

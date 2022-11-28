@@ -19,7 +19,7 @@ const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/users');
 const apiRoute = require('./routes/apis');
-const url = "localhost"
+const url = process.env.mongo_DB
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
 const post = require('./models/post');
@@ -32,7 +32,7 @@ const cookieParser = require('cookie-parser');
 sessionOptions = {
     resave: false,
     saveUninitialized: false,
-    secret:"asvEtt#4215",
+    secret: process.env.s_secret,
 }
 
 app.use(cors())
