@@ -63,12 +63,12 @@
             <% posts.forEach(post => { %>
                 <div class="post">
                     <div class="post-upvote">
-                        <i class="fas fa-arrow-up "></i>
-                        <span>0</span>
-                        <i class="fas fa-arrow-down "></i>
+                        <a href="/r/<%= subreddit %>/<%= post._id %>/upvote"><i class="fas fa-arrow-up "></i></a>
+                        <span><%= post.meta.upvotes.length - post.meta.down_votes.length  %> </span>
+                        <a href="/r/<%= subreddit %>/<%= post._id %>/downvote"><i class="fas fa-arrow-down "></i></a>
                     </div>
                     <div class="post-content">
-                        <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
+                        <p><a class='community-text' href="/r/<%= subreddit %>">r/<%= subreddit %> </a><span>Posted by <a href="/u/<%= post.user.username %>">u/<%= post.user.username %> </a></span></p>
                     <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %></a></h4>
                     <% if (post.body) { %>
                         <p><%= post.body %></p>
@@ -87,7 +87,12 @@
                             <i class="fas fa-share fa-1x"></i> Share
                         </div>
                         <div class="post-info-bookmark">
-                            <i class="fas fa-bookmark fa-1x"></i> Save
+                            <% if(signedUser && signedUser.bookmarked_posts.includes(post._id)) { %>
+                                <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/unbookmark"><i class="fas fa-bookmark fa-1x"></i> Unsave</a>
+                            <% } else { %>     
+                            <!-- signedUser.followedCommunites.includes(subreddit) -->
+                            <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                            <% }  %> 
                         </div>
                     </div>
                     </div>

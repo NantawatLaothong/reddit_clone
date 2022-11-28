@@ -20,7 +20,7 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-plus"></i></i>
               Create Post
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu dropdown-menu-dark">
               <li><div class="ps-2">Your Communities</div></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createCommunity"><i class="bi bi-plus-lg"></i> Create a Community</a></li>
               <% signedUser.followedCommunites.forEach(community => { %>
@@ -55,7 +55,7 @@
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="comment-item-profile" src="<%= signedUser.Bio.profileImage.url %> " alt=""><%= signedUser.username %> 
               </a>
-              <div class="dropdown-menu dropdown-menu-end">
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                 <a class="dropdown-item" href="/u/profile">My Profile</a>
                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profile">Edit Profile</a>
                 <a class="dropdown-item" href="/users/logout">Log out</a>
@@ -81,13 +81,14 @@
   
   <div class="modal fade" id="createCommunity" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content dark-mode">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Community</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form action="/r" method="POST">
         <div class="modal-body">
+          
           
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Name</label>
@@ -170,7 +171,7 @@
   <% if (signedUser) { %>
     <div class="modal fade" id="profile" tabindex="-1" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content dark-mode">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Profile</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

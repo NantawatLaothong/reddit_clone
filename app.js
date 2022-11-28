@@ -26,6 +26,7 @@ const post = require('./models/post');
 const user = require('./models/user');
 const { send } = require('process');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 // session 
 sessionOptions = {
@@ -47,6 +48,7 @@ app.use(morgan('tiny'));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname,'public')));
+app.use(cookieParser());
 // app.use(express.static(path.join(__dirname,'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(__dirname, 'views'));
@@ -79,6 +81,7 @@ app.use((req, res, next)=>{
     next();
 })
 
+// homepage
 app.get('/', async (req, res)=>{
     try {
         // if the user logged in
@@ -87,7 +90,7 @@ app.get('/', async (req, res)=>{
             // const stringOfFollowedCommunities = user.followedCommunites;
             // console.log(user.followedCommunities)
             console.log(user.followedCommunites)
-            const r = await Subreddit.find({r: {$in: user.followedCommunites}});
+            const r = await Subreddit.find({r: {$in: user.followedCommunites}}).limit(5);
             // find 5 posts
             const posts = await Post.find({subreddit: {$in: r}}).populate('subreddit').populate('meta').populate('user').sort({ createdAt: -1 }).limit(5);
             // console.log('r value')
@@ -96,7 +99,7 @@ app.get('/', async (req, res)=>{
             // console.log(posts);
             res.render('home', {posts, r, url: req.url})
         }
-        const r = await Subreddit.find()
+        const r = await Subreddit.find().limit(5);
         // find 5 post
         const posts = await Post.find().populate('subreddit').populate('user').sort({ createdAt: -1 }).limit(5)
         console.log(req.url);

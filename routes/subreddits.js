@@ -166,7 +166,7 @@ router.get('/:subreddit/leave', isLoggedIn, async(req, res)=>{
 router.get('/:subreddit', async (req, res)=>{
   try {
     const {subreddit} = req.params
-    const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', options: {sort: {'createdAt': -1}, limit: 5}});
+    const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', options: { populate: {path: 'user'}, sort: {'createdAt': -1}, limit: 5}});
     // console.log(req.originalUrl);
     const posts = r.posts
     if(r){

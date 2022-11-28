@@ -28,7 +28,6 @@
                         <div class="post-image text-center">
                             <img class='img-fluid' src="<%= post.imageURL.url %>" alt="">
                         </div>
-                        
                     <% } %> 
                     <hr>
                     <div class="post-info">
@@ -40,7 +39,7 @@
                                 <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
                             
                                 <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
-                                    <a class="dropdown-item" id="copyLink" href="/r/<%= post.subreddit.r %>/<%= post._id %>" onclick="copyLink"><i class="fas fa-link"></i> Copy Link</a>
+                                    <p class="dropdown-item copyLink" data="/r/<%= post.subreddit.r %>/<%= post._id %>" href="/r/<%= post.subreddit.r %>/<%= post._id %>" ><i class="fas fa-link"></i> Copy Link</a>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +56,7 @@
                 </div>
             <% }) %>
       
-            
+
             <button class="btn btn-dark loadMorePost" id="LoadMorePostHome">Load more posts</p>
         </div>
         
@@ -113,13 +112,20 @@
     </div>
 </div>
 <script>
-    $('#copyLink').click(()=>{
-        let copyLink = document.getElementById('copyLink')
-        let textToCopy = 'https://forum.helloearth.io' + copyLink.getAttribute('href');
-        navigator.clipboard.writeText(textToCopy);
-        // alert('Copied Link!')
-        return false
-    });
+
+    // let copyLink = $('.copyLink');
+    // $('.copyLink').each(()=>{
+        // $(this).on('click',()=>{
+            // alert('hi');
+        // })
+    // })
+    // $('.copyLink').click(()=>{
+    //     let copyLink = document.getElementById('copyLink')
+    //     let textToCopy = 'https://forum.helloearth.io' + copyLink.getAttribute('href');
+    //     navigator.clipboard.writeText(textToCopy);
+    //     // alert('Copied Link!')
+    //     return false
+    // });
 
 </script>
 <%- include('./partials/footer'); %>

@@ -30,12 +30,12 @@ var debounce = function (func, wait, immediate) {
 //         </div>
 //         <div class="post-content">
 //             <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
-//         <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %></a></h4>
+//         <h4><a href="/r/<%= subreddit %>/${ post._id }">${ post.title }</a></h4>
 //         <% if (post.body) { %>
 //             <p><%= post.body %></p>
 //         <% } else if(post.imageURL){ %>
 //             <div class="post-image text-center">
-//                 <img class='img-fluid' src="<%= post.imageURL.url %>" alt="">
+//                 <img class='img-fluid' src="${ post.imageURL.url}" alt="">
 //             </div>
             
 //         <% } %> 
@@ -43,47 +43,108 @@ var debounce = function (func, wait, immediate) {
 
 let page = 1;
 
+
+
 $('.loadMorePost').click(function(){
     // console.log(window.location)
     console.log('clicked');
     console.log(page);
     if(window.location.pathname == '/'){
         // let div = document.createElement('DIV')
-        $.get(`http://localhost:7098/apis/news/${page}`, (posts)=>{
+        let url;
+        if(document.cookie){
+            let username = document.cookie.split('=')[1];
+            url = `http://localhost:7098/apis/news/${page}?username=${username}`
+            console.log(url);
+            // get the username from cookie
+        } else {
+            url = `http://localhost:7098/apis/news/${page}`;
+        }
+        $.get(url, (posts)=>{
             if(posts.length == 0){
                 $('.loadMorePost').remove();
             }
             posts.forEach(post => {
                 if(post.imageURL){
-                    var postDiv = $(`<div class="post">
-                        <div class="post-upvote">
-                            <i class="fas fa-arrow-up "></i>
-                             <span>0</span>
-                             <i class="fas fa-arrow-down "></i>
-                         </div>
-                        <div class="post-content">
-                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
-                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
-                             <div class="post-image text-center">
-                                 <img class='img-fluid' src="${post.imageURL.url}" alt="">
-                             </div>`);
+                    var postDiv = $(`
+                    <div class="post">
+                    <div class="post-upvote">
+                        <a href="r/${ post.subreddit.r }/${ post._id }/upvote"><i class="fas fa-arrow-up "></i></a>
+                        <span>${ post.meta.upvotes.length - post.meta.down_votes.length  } </span>
+                        <a href="r/${ post.subreddit.r }/${ post._id }/downvote"><i class="fas fa-arrow-down "></i></a>
+                    </div>
+                    <div class="post-content">
+                        <p><a class='community-text' href="/r/${ post.subreddit.r }">r/${ post.subreddit.r } </a><span>Posted by <a href="/u/${ post.user.username }">u/${ post.user.username } </a></span></p>
+                    <h4><a href="r/${ post.subreddit.r }/${ post._id }">${ post.title } </a></h4>
+                        <div class="post-image text-center">
+                            <img class='img-fluid' src="${ post.imageURL.url}" alt="">
+                        </div>
+                    <hr>
+                    <div class="post-info">
+                        <div class="post-info-comments">
+                            <a href="/r/${ post.subreddit.r }/${ post._id }"><span><i class="fas fa-comment fa-1x"></i> ${ post.comments.length}  Comments</span></a>
+                        </div>
+                        <div class="post-info-share">
+                            <div class="dropdown show">
+                                <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
+                            
+                                <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
+                                    <p class="dropdown-item copyLink" data="/r/${ post.subreddit.r }/${ post._id }" href="/r/${ post.subreddit.r }/${ post._id }" ><i class="fas fa-link"></i> Copy Link</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-info-bookmark">
+                            <a href="/r/${ post.subreddit.r }/${ post._id }/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                             `);
                 }else {
-                var postDiv = $(`<div class="post">
-                        <div class="post-upvote">
-                            <i class="fas fa-arrow-up "></i>
-                             <span>0</span>
-                             <i class="fas fa-arrow-down "></i>
-                         </div>
-                        <div class="post-content">
-                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
-                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
-                             <p>${post.body}</p>
-                             </div>`);
+                var postDiv = $(`
+                <div class="post">
+                <div class="post-upvote">
+                    <a href="r/${ post.subreddit.r }/${ post._id }/upvote"><i class="fas fa-arrow-up "></i></a>
+                    <span>${ post.meta.upvotes.length - post.meta.down_votes.length  } </span>
+                    <a href="r/${ post.subreddit.r }/${ post._id }/downvote"><i class="fas fa-arrow-down "></i></a>
+                </div>
+                <div class="post-content">
+                    <p><a class='community-text' href="/r/${ post.subreddit.r }">r/${ post.subreddit.r } </a><span>Posted by <a href="/u/${ post.user.username }">u/${ post.user.username } </a></span></p>
+                <h4><a href="r/${ post.subreddit.r }/${ post._id }">${ post.title } </a></h4>
+                <p>${ post.body }</p>
+                <hr>
+                <div class="post-info">
+                    <div class="post-info-comments">
+                        <a href="/r/${ post.subreddit.r }/${ post._id }"><span><i class="fas fa-comment fa-1x"></i> ${ post.comments.length}  Comments</span></a>
+                    </div>
+                    <div class="post-info-share">
+                        <div class="dropdown show">
+                            <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
+                        
+                            <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
+                                <p class="dropdown-item copyLink" data="/r/${ post.subreddit.r }/${ post._id }" href="/r/${ post.subreddit.r }/${ post._id }" ><i class="fas fa-link"></i> Copy Link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-info-bookmark">
+                        <a href="/r/${ post.subreddit.r }/${ post._id }/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+                            `);
                             }
                 $('.loadMorePost').before(postDiv)
             });
+            page += 1
+            $.get(`http://localhost:7098/apis/news/${page}`, (posts)=>{
+                if(posts.length == 0){
+                    $('.loadMorePost').remove();
+                }
+            });
         })
-        page += 1
+
+
     }else{
         let r = $('.loadMorePost').attr('data');
         // let div = document.createElement('DIV')
@@ -93,35 +154,83 @@ $('.loadMorePost').click(function(){
             }
             posts.forEach(post => {
                 if(post.imageURL){
-                    var postDiv = $(`<div class="post">
-                        <div class="post-upvote">
-                            <i class="fas fa-arrow-up "></i>
-                             <span>0</span>
-                             <i class="fas fa-arrow-down "></i>
-                         </div>
-                        <div class="post-content">
-                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
-                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
-                             <div class="post-image text-center">
-                                 <img class='img-fluid' src="${post.imageURL.url}" alt="">
-                             </div>`);
+                    var postDiv = $(`
+                    <div class="post">
+                    <div class="post-upvote">
+                        <a href="/r/${ post.subreddit.r }/${ post._id }/upvote"><i class="fas fa-arrow-up "></i></a>
+                        <span>${ post.meta.upvotes.length - post.meta.down_votes.length  } </span>
+                        <a href="/r/${ post.subreddit.r }/${ post._id }/downvote"><i class="fas fa-arrow-down "></i></a>
+                    </div>
+                    <div class="post-content">
+                        <p><a class='community-text' href="/r/${ post.subreddit.r }">r/${ post.subreddit.r } </a><span>Posted by <a href="/u/${ post.user.username }">u/${ post.user.username } </a></span></p>
+                    <h4><a href="/r/${ post.subreddit.r }/${ post._id }">${ post.title } </a></h4>
+                        <div class="post-image text-center">
+                            <img class='img-fluid' src="${ post.imageURL.url}" alt="">
+                        </div>
+                    <hr>
+                    <div class="post-info">
+                        <div class="post-info-comments">
+                            <a href="/r/${ post.subreddit.r }/${ post._id }"><span><i class="fas fa-comment fa-1x"></i> ${ post.comments.length}  Comments</span></a>
+                        </div>
+                        <div class="post-info-share">
+                            <div class="dropdown show">
+                                <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
+                            
+                                <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
+                                    <p class="dropdown-item copyLink" data="/r/${ post.subreddit.r }/${ post._id }" href="/r/${ post.subreddit.r }/${ post._id }" ><i class="fas fa-link"></i> Copy Link</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-info-bookmark">
+                            <a href="/r/${ post.subreddit.r }/${ post._id }/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                             `);
                 }else {
-                var postDiv = $(`<div class="post">
-                        <div class="post-upvote">
-                            <i class="fas fa-arrow-up "></i>
-                             <span>0</span>
-                             <i class="fas fa-arrow-down "></i>
-                         </div>
-                        <div class="post-content">
-                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
-                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
-                             <p>${post.body}</p>
-                             </div>`);
+                    var postDiv = $(`
+                    <div class="post">
+                    <div class="post-upvote">
+                        <a href="/r/${ post.subreddit.r }/${ post._id }/upvote"><i class="fas fa-arrow-up "></i></a>
+                        <span>${ post.meta.upvotes.length - post.meta.down_votes.length  } </span>
+                        <a href="/r/${ post.subreddit.r }/${ post._id }/downvote"><i class="fas fa-arrow-down "></i></a>
+                    </div>
+                    <div class="post-content">
+                        <p><a class='community-text' href="/r/${ post.subreddit.r }">r/${ post.subreddit.r } </a><span>Posted by <a href="/u/${ post.user.username }">u/${ post.user.username } </a></span></p>
+                    <h4><a href="/r/${ post.subreddit.r }/${ post._id }">${ post.title } </a></h4>
+                    <p>${ post.body }</p>
+                    <hr>
+                    <div class="post-info">
+                        <div class="post-info-comments">
+                            <a href="/r/${ post.subreddit.r }/${ post._id }"><span><i class="fas fa-comment fa-1x"></i> ${ post.comments.length}  Comments</span></a>
+                        </div>
+                        <div class="post-info-share">
+                            <div class="dropdown show">
+                                <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
+                            
+                                <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
+                                    <p class="dropdown-item copyLink" data="/r/${ post.subreddit.r }/${ post._id }" href="/r/${ post.subreddit.r }/${ post._id }" ><i class="fas fa-link"></i> Copy Link</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-info-bookmark">
+                            <a href="/r/${ post.subreddit.r }/${ post._id }/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                                `);
                             }
                 $('.loadMorePost').before(postDiv)
             });
+            page += 1
+            $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
+                if(posts.length == 0){
+                    $('.loadMorePost').remove();
+                }
+            });
         })
-        page += 1
     }
 })
 
@@ -209,3 +318,15 @@ $('#search-input').keyup(debounce(function(){
     
 // });
 
+
+function getCopyLink(){
+    copyLinks = document.getElementsByClassName('copyLink');
+    for (var i = 0; i < copyLinks.length; i++){
+        copyLinks[i].addEventListener('click', (event)=>{
+            let textToCopy = 'https://forum.helloearth.io' + event.target.getAttribute('data');
+            navigator.clipboard.writeText(textToCopy);
+        })
+    }
+}
+
+getCopyLink()

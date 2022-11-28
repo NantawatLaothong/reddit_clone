@@ -35,6 +35,8 @@ router.post('/', async(req, res)=>{
 router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect:'/'}), async(req, res)=>{
     try{
         req.flash('success', 'Logged in!');
+        // set cookie so we can get the posts just for the user
+        res.cookie('user', req.user.username)
         res.redirect('/');
     } catch(err){
         console.log('error occued in /users/login');
@@ -45,6 +47,7 @@ router.post('/login', passport.authenticate('local', {failureFlash: true, failur
 router.get('/logout', async(req, res)=>{
     try{
             req.logout((err)=>{
+                res.clearCookie('user');
                 req.flash('success', 'Logged Out!');
                 res.redirect('/')
         if(err){

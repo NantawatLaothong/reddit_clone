@@ -4,7 +4,7 @@
 <%- include('../partials/navbar'); %>
 <div class="container">
     <div class="row">
-        <h3 class="text-dark">/r/<%= subreddit %>: everything about anime</h3>
+        <h3 class="text-dark"><a href="/r/<%= subreddit %>">/r/<%= subreddit %></a>: everything about anime</h3>
         <div class="col-md-5 offset-md-2">
             
                 <div class="post">
@@ -14,7 +14,7 @@
                         <a href="/r/<%= subreddit %>/<%= post._id %>/downvote"><i class="fas fa-arrow-down "></i></a>
                     </div>
                     <div class="post-content">
-                        <p>r/<%= subreddit %><span> Posted by <%= post.user.username %> </span></p>
+                        <p><a class='community-text' href="/r/<%= subreddit %>">r/<%= subreddit %> </a><span>Posted by <a href="/u/<%= post.user.username %>">u/<%= post.user.username %> </a></span></p>
                     <h4><a href="#"><%= post.title %></a></h4>
                     <% if (post.body) { %>
                         <p><%= post.body %></p>

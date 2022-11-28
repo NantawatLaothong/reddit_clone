@@ -59,9 +59,9 @@ body {
     gap: 20px;
 }
 /*save button color change*/
-.post-info-bookmark {
+/* .post-info-bookmark {
     color: #d7dadc98;
-}
+} */
 
 .post {
     border: 1px solid hsla(0,0%,100%,0.2);
@@ -221,7 +221,11 @@ body{
 }
 
 .post span {
-    color: #6f7071
+    color: #D7DADC;
+}
+
+.post-info {
+    color: #D7DADC;
 }
 
 .post:hover {
@@ -242,7 +246,7 @@ body{
 }
 
 .navbar a {
-    color: #D7DADC;
+    color: #D7DADC !important;
 }
 
 .top-communities{

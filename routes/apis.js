@@ -25,8 +25,9 @@ router.get('/r/:subreddit/:page', async(req, res)=>{
         if (page == null){
             page = 0
         }
-        const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', 
-        options: {populate: {path: 'user', path: 'subreddit', select: 'r'}, sort: {'createdAt': -1},
+        // nested populate
+        const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', populate: [{path:'subreddit', select: 'r'}, {path:'user', select:'username'}], 
+        options: {sort: {'createdAt': -1},
             limit: 5,
                 skip: 5 * page
     }});
@@ -40,13 +41,30 @@ router.get('/r/:subreddit/:page', async(req, res)=>{
 
 router.get('/news/:page', async(req, res)=>{
     try {
+
         const {page} = req.params;
         if (page == null){
             page = 0
         }
-        const posts = await Post.find().populate({path: 'subreddit', select: 'r', path:'user', select: 'username'}).sort({createdAt: -1}).limit(5).skip(5*page);
+        // find posts for user
+        console.log(req.query);
+        if(req.query.username){
+            const user = await User.findOne({'username': req.query.username});
+            // const stringOfFollowedCommunities = user.followedCommunites;
+            // console.log(user.followedCommunities)
+            if(user){
+                console.log(user.followedCommunites)
+                const r = await Subreddit.find({r: {$in: user.followedCommunites}}).limit(5);
+                const posts = await Post.find({subreddit: {$in: r}}).populate({path: 'subreddit', select: 'r' }).populate('meta').populate({path: 'user', select: 'username'}).sort({ createdAt: -1 }).limit(5).skip(5*page);
+                console.log(5 * page);
+                res.send(posts);
+            }
+        } else {
+      // find posts for home
+        const posts = await Post.find().populate({path: 'subreddit', select: 'r'}).populate('comments').populate({path:'user', select: 'username'}).sort({createdAt: -1}).limit(5).skip(5*page);
         console.log(5 * page);
         res.send(posts);
+        }
     } catch(err) {
         res.send('API /news does not work preperly')
     }
