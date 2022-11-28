@@ -18,6 +18,7 @@ router.get('/search', async(req, res)=>{
     }
 });
 
+// /apis/r/:subreddit/:page
 router.get('/r/:subreddit/:page', async(req, res)=>{
     try{ 
         const {subreddit, page} = req.params
@@ -25,8 +26,8 @@ router.get('/r/:subreddit/:page', async(req, res)=>{
             page = 0
         }
         const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', 
-        options: {sort: {'createdAt': -1},
-                limit: 5,
+        options: {populate: {path: 'user', path: 'subreddit', select: 'r'}, sort: {'createdAt': -1},
+            limit: 5,
                 skip: 5 * page
     }});
         // console.log(req.originalUrl);
@@ -34,6 +35,20 @@ router.get('/r/:subreddit/:page', async(req, res)=>{
         res.send(posts);
     }catch(err) {
         res.send('API /more does not work properly')
+    }
+})
+
+router.get('/news/:page', async(req, res)=>{
+    try {
+        const {page} = req.params;
+        if (page == null){
+            page = 0
+        }
+        const posts = await Post.find().populate({path: 'subreddit', select: 'r', path:'user', select: 'username'}).sort({createdAt: -1}).limit(5).skip(5*page);
+        console.log(5 * page);
+        res.send(posts);
+    } catch(err) {
+        res.send('API /news does not work preperly')
     }
 })
 

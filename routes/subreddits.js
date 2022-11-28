@@ -142,7 +142,7 @@ router.get('/:subreddit/follow', isLoggedIn, async(req, res)=>{
   }
 });
 
-router.get('/:subreddit/leave', async(req, res)=>{
+router.get('/:subreddit/leave', isLoggedIn, async(req, res)=>{
   try{
     const {subreddit} = req.params
     if(req.user){
@@ -271,7 +271,7 @@ router.get('/:subreddit/:id/unbookmark', isLoggedIn, async(req, res)=>{
 
 // await Subreddit.find({r: {$in: user.followedCommunites}});
 // upvote and downvote
-router.get('/:subreddit/:id/upvote', async(req, res)=>{
+router.get('/:subreddit/:id/upvote', isLoggedIn, async(req, res)=>{
   try{
     const { subreddit, id } = req.params;
     const user = await User.findById(req.user._id);
@@ -304,7 +304,7 @@ router.get('/:subreddit/:id/upvote', async(req, res)=>{
   }
 })
 
-router.get('/:subreddit/:id/downvote', async(req, res)=>{
+router.get('/:subreddit/:id/downvote', isLoggedIn, async(req, res)=>{
   try{
     const { subreddit, id } = req.params;
     const user = await User.findById(req.user._id);

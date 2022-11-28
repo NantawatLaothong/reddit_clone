@@ -96,7 +96,7 @@ app.get('/', async (req, res)=>{
             // console.log(posts);
             res.render('home', {posts, r, url: req.url})
         }
-        const r = await Subreddit.find().limit(5)
+        const r = await Subreddit.find()
         // find 5 post
         const posts = await Post.find().populate('subreddit').populate('user').sort({ createdAt: -1 }).limit(5)
         console.log(req.url);

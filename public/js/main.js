@@ -20,15 +20,109 @@ var debounce = function (func, wait, immediate) {
 //     })
 // }
 
-let page = 1
+// template for rendering a post
+// <% posts.forEach(post => { %>
+//     <div class="post">
+//         <div class="post-upvote">
+//             <i class="fas fa-arrow-up "></i>
+//             <span>0</span>
+//             <i class="fas fa-arrow-down "></i>
+//         </div>
+//         <div class="post-content">
+//             <p>r/<%= subreddit %><span> Posted by toru1038</span></p>
+//         <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %></a></h4>
+//         <% if (post.body) { %>
+//             <p><%= post.body %></p>
+//         <% } else if(post.imageURL){ %>
+//             <div class="post-image text-center">
+//                 <img class='img-fluid' src="<%= post.imageURL.url %>" alt="">
+//             </div>
+            
+//         <% } %> 
+
+
+let page = 1;
 
 $('.loadMorePost').click(function(){
-    console.log('clicked')
-    // let div = document.createElement('DIV')
-    $.get(`http://localhost:7098/apis/r/anime/${page}`, (posts)=>{
-        console.log(posts)
-    })
-    page += 1
+    // console.log(window.location)
+    console.log('clicked');
+    console.log(page);
+    if(window.location.pathname == '/'){
+        // let div = document.createElement('DIV')
+        $.get(`http://localhost:7098/apis/news/${page}`, (posts)=>{
+            if(posts.length == 0){
+                $('.loadMorePost').remove();
+            }
+            posts.forEach(post => {
+                if(post.imageURL){
+                    var postDiv = $(`<div class="post">
+                        <div class="post-upvote">
+                            <i class="fas fa-arrow-up "></i>
+                             <span>0</span>
+                             <i class="fas fa-arrow-down "></i>
+                         </div>
+                        <div class="post-content">
+                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
+                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
+                             <div class="post-image text-center">
+                                 <img class='img-fluid' src="${post.imageURL.url}" alt="">
+                             </div>`);
+                }else {
+                var postDiv = $(`<div class="post">
+                        <div class="post-upvote">
+                            <i class="fas fa-arrow-up "></i>
+                             <span>0</span>
+                             <i class="fas fa-arrow-down "></i>
+                         </div>
+                        <div class="post-content">
+                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
+                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
+                             <p>${post.body}</p>
+                             </div>`);
+                            }
+                $('.loadMorePost').before(postDiv)
+            });
+        })
+        page += 1
+    }else{
+        let r = $('.loadMorePost').attr('data');
+        // let div = document.createElement('DIV')
+        $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
+            if(posts.length == 0){
+                $('.loadMorePost').remove();
+            }
+            posts.forEach(post => {
+                if(post.imageURL){
+                    var postDiv = $(`<div class="post">
+                        <div class="post-upvote">
+                            <i class="fas fa-arrow-up "></i>
+                             <span>0</span>
+                             <i class="fas fa-arrow-down "></i>
+                         </div>
+                        <div class="post-content">
+                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
+                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
+                             <div class="post-image text-center">
+                                 <img class='img-fluid' src="${post.imageURL.url}" alt="">
+                             </div>`);
+                }else {
+                var postDiv = $(`<div class="post">
+                        <div class="post-upvote">
+                            <i class="fas fa-arrow-up "></i>
+                             <span>0</span>
+                             <i class="fas fa-arrow-down "></i>
+                         </div>
+                        <div class="post-content">
+                            <p>r/${post.subreddit.r}<span> Posted by ${post.user.username}</span></p>
+                        <h4><a href="/r/<%= subreddit %>/<%= post._id %>">${post.title }</a></h4>
+                             <p>${post.body}</p>
+                             </div>`);
+                            }
+                $('.loadMorePost').before(postDiv)
+            });
+        })
+        page += 1
+    }
 })
 
 $('#search-input').keyup(debounce(function(){

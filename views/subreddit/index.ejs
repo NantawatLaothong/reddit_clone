@@ -59,7 +59,7 @@
                 </div>
               </div>
         </div>
-        <div class="col-md-6 offset-md-1">
+        <div class="col-md-6 offset-md-1 posts-container">
             <% posts.forEach(post => { %>
                 <div class="post">
                     <div class="post-upvote">
@@ -93,8 +93,12 @@
                     </div>
                 </div>
             <% }) %>
-            <button class="btn btn-dark loadMorePost">Load more posts</p>
+            
+                <button class="btn btn-dark loadMorePost" data="<%= subreddit %>">Load more posts</p>
+            
+            
         </div>
+        
         <div class="col-md-3">
             <div class="about-community border border-dark mt-3 p-3">
                 <h5>About the community</h5>

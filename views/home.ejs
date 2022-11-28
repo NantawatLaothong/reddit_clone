@@ -8,7 +8,6 @@
 <% if (signedUser) { %>
 <% } %>
 
-<%- include('./partials/footer'); %>
 <div class="container">
     <%- include('./partials/flash')  %> 
     <div class="row">
@@ -59,8 +58,9 @@
             <% }) %>
       
             
-    
+            <button class="btn btn-dark loadMorePost" id="LoadMorePostHome">Load more posts</p>
         </div>
+        
         <div class="col-md-3">
             <div class="sidebar">
                 <div class="top-communities border border-dark p-3 mb-3">
@@ -82,7 +82,7 @@
                                 <% if (signedUser) { %>
                                 <a class="btn btn-dark" href="/r/<%= subreddit.r %>/leave">Leave</a>
                                 <% } else {%>
-                                    <button class="btn btn-dark">Join</button>
+                                    <a class="btn btn-dark" href="/r/<%= subreddit.r %>/follow">Join</a>
                                 <% } %> 
                             </li>
                             <hr>
@@ -119,7 +119,9 @@
         navigator.clipboard.writeText(textToCopy);
         // alert('Copied Link!')
         return false
-    })
+    });
+
 </script>
+<%- include('./partials/footer'); %>
 </body>
 </html>

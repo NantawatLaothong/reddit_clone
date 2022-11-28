@@ -8,6 +8,7 @@ const Comment = require('../models/comment');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const { reset } = require('nodemon');
 
 // s3 configuration
 const s3AccessKey = process.env.S3_ACCESS_KEY
@@ -71,6 +72,22 @@ router.get('/profile', isLoggedIn, async(req, res)=>{
     }
 })
 
+// get user posts 
+router.get('/:username', async(req, res)=>{
+    try {
+        const user = await User.findOne({username: req.params.username}).populate({path: 'posts', options: { 'populate': 'subreddit',  sort: {'createdAt': -1}}});
+        if (user){
+            console.log(user.posts);
+            res.render('users/single', {url: req.url, user, posts: user.posts});
+            // res.send('found the user')
+        } else {
+            req.send(`can't find the user`)
+        }
+    } catch(err) {
+        console.log(err);
+    }
+})
+
 router.put('/:id', upload.single('profileImage'), async(req, res)=>{
     try {
         const user = await User.findById(req.user._id);
@@ -84,6 +101,7 @@ router.put('/:id', upload.single('profileImage'), async(req, res)=>{
         console.log('Putting user failed')
     }
 })
+
 
 // exporting using es6
 module.exports = router;
