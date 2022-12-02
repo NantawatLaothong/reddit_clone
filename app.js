@@ -19,6 +19,7 @@ const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/users');
 const apiRoute = require('./routes/apis');
+const commentRoute = require('./routes/comment-route');
 const url = process.env.mongo_DB
 const Post = require('./models/post')
 const Subreddit = require('./models/subreddit');
@@ -141,6 +142,8 @@ app.use('/r', subredditRouter);
 app.use('/users', authRoute);
 app.use('/u', userRoute);
 app.use('/apis', apiRoute);
+app.use('/c', commentRoute);
+
 app.listen(port, ()=>{
     console.log(`app is listening on: http://localhost:${port}`);
 })

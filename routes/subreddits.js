@@ -247,7 +247,7 @@ router.get('/:subreddit/:id', async(req, res)=>{
     const {subreddit, id} = req.params
     // const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', match: {"_id": id}});
     const post = await Post.findOne({_id:id}).populate({path: 'comments', options:{ populate:'user'} }).populate('user');
-    const comments = await Comment.find({post: post}).populate('user');
+    const comments = await Comment.find({post: post}).populate('user').populate({path:'comments', options:{ populate:'user'}});
     const url = '/' + req.originalUrl.split('/')[1] +  '/' +req.originalUrl.split('/')[2]
     // console.log(r);
     // const post = await r.find({"post._id": id});

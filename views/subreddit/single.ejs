@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <h3 class="text-dark"><a href="/r/<%= subreddit %>">/r/<%= subreddit %></a>: everything about anime</h3>
-        <div class="col-xl-5 offset-xl-2">
+        <div class="col-md-5 offset-md-2">
             
                 <div class="post">
                     <div class="post-upvote">
@@ -62,7 +62,7 @@
             <hr>
             <div class="row comments">
                 <% comments.forEach(comment => { %>
-                 <div class="comment-item" id="<%= comment._id %> ">
+                 <div class="comment-item" id="<%= comment._id %>">
                     <div class="comment-item-image">
                         <img class='comment-item-profile' src="<%= comment.user.Bio.profileImage.url %> " alt="">
                     </div>
@@ -70,19 +70,33 @@
                         <p><span></span><%= comment.user.username %> created <%= new Date(comment.createdAt).toDateString() %> </p>
                         <p><%= comment.body %></p>
                         <div class="comment-item-options d-flex">
-                            <button class="btn addReplyForm" >Reply</button>
+                            <button class="btn addReplyForm" data="<%= comment._id %>" data="<%= comment._id %>">Reply</button>
                         </div>
- 
+                        <div class="comment-comments">
+                            <% comment.comments.forEach(comment => { %>
+                                <div class="comment-item" id="<%= comment._id %>">
+                                    <div class="comment-item-image">
+                                        <img class='comment-item-profile' src="<%= comment.user.Bio.profileImage.url %> " alt="">
+                                    </div>
+                                    <div class="comment-item-body">
+                                        <p><span></span><%= comment.user.username %> created <%= new Date(comment.createdAt).toDateString() %> </p>
+                                        <p><%= comment.body %></p>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                        <!-- start for comment-comments -->
+            
+                        <!-- end for comment-comments -->
                     </div>
                     <!-- reply form -->
-
+                    
                 </div>    
                 <hr>
                 <% }) %>
-                
             </div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-md-3">
             <div class="about-community border border-dark mt-3 p-3">
                 <h3>/r/<%= subreddit %></h3>
                 <p>About the community</p>
@@ -95,21 +109,23 @@
 <%- include('../partials/footer'); %>
 <script>
     $(document).ready(function(){
-        let form = `<div class="row reply">
-                            <form action="/r/<%= subreddit %>/<%= post._id %>/comment" method="POST">
-                                <div class="mb-3">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="commentText"></textarea>
-                                </div>
-                                <button class="btn btn-primary">reply</button>
-                            </form>
-                        </div>`
+        function replyLink(link){
+            return `<div class="row reply">
+                        <form action="/c/${link}" method="POST">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="commentText"></textarea>
+                            </div>
+                            <button class="btn btn-primary">reply</button>
+                        </form>
+                    </div>`
+        }
         function addReplyForm(){
         if($(this).parent().parent().hasClass('formDisplayed')){
-            $(this).parent().next().remove();
+            $(this).parent().next().next().remove();
             $(this).parent().parent().removeClass('formDisplayed');
             console.log('deleting')
         }else{
-            $(this).parent().parent().append(form)
+            $(this).parent().parent().append(replyLink($(this).attr('data')));
             $(this).parent().parent().addClass('formDisplayed');
         }
     }
