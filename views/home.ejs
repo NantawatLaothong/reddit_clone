@@ -11,7 +11,7 @@
 <div class="container">
     <%- include('./partials/flash')  %> 
     <div class="row">
-        <div class="col-md-6 offset-md-1">
+        <div class="col-xl-6 offset-xl-1">
             <% posts.forEach(post => { %>
                 <div class="post">
                     <div class="post-upvote">
@@ -63,7 +63,7 @@
             <% } %>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-xl-3">
             <div class="sidebar">
                 <div class="top-communities border border-dark p-3 mb-3">
                     <% if (signedUser) { %>
@@ -80,7 +80,7 @@
                                 <% }else{ %>
                                 <img class='icon-image' width="50px" src="https://i.pinimg.com/474x/1c/9f/a9/1c9fa971343023a1dfcf69274b60c2f4.jpg" alt="">
                                 <% } %> 
-                                <a href="r/<%= subreddit.r %>">r/<%= subreddit.r %> </a>
+                                <a class="nav-link" href="r/<%= subreddit.r %>">r/<%= subreddit.r %> </a>
                                 <% if (signedUser) { %>
                                 <a class="btn btn-dark" href="/r/<%= subreddit.r %>/leave">Leave</a>
                                 <% } else {%>
