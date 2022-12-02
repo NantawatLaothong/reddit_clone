@@ -54,7 +54,7 @@ $('.loadMorePost').click(function(){
         let url;
         if(document.cookie){
             let username = document.cookie.split('=')[1];
-            url = `http://localhost:7098/apis/posts?page=${page}&username=${username}`
+            url = "http://localhost:7098/apis/posts?page="+ page + "&username="+ username;
             console.log(url);
             // get the username from cookie
         } else {
@@ -330,4 +330,9 @@ function getCopyLink(){
     }
 }
 
+function changeAction(val) {
+    $('#creative_post').attr('action', '/r/' + val);
+}
+
 getCopyLink()
+

@@ -26,10 +26,21 @@
                             <i class="fas fa-comment fa-1x"></i> <%= comments.length %>  comments
                         </div>
                         <div class="post-info-share">
-                            <i class="fas fa-share fa-1x"></i> Share
+                            <div class="dropdown show">
+                                <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
+                            
+                                <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
+                                    <p class="dropdown-item copyLink" data="/r/<%= subreddit %>/<%= post._id %>" href="/r/<%= subreddit %>/<%= post._id %>" ><i class="fas fa-link"></i> Copy Link</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="post-info-bookmark">
-                            <i class="fas fa-bookmark fa-1x"></i> Save
+                            <% if(signedUser && signedUser.bookmarked_posts.includes(post._id)) { %>
+                                <a href="/r/<%= subreddit %>/<%= post._id %>/unbookmark"><i class="fas fa-bookmark fa-1x"></i> Unsave</a>
+                            <% } else { %>     
+                            <!-- signedUser.followedCommunites.includes(subreddit) -->
+                            <a href="/r/<%= subreddit %>/<%= post._id %>/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                            <% }  %> 
                         </div>
                     </div>
                     </div>
@@ -48,7 +59,7 @@
                 <% comments.forEach(comment => { %>
                  <div class="comment-item" id="<%= comment._id %> ">
                     <div class="comment-item-image">
-                        <img class='comment-item-profile' src="https://assets.codepen.io/3283647/internal/avatars/users/default.png?fit=crop&format=auto&height=256&version=1608577514&width=256" alt="">
+                        <img class='comment-item-profile' src="<%= comment.user.Bio.profileImage.url %> " alt="">
                     </div>
                     <div class="comment-item-body">
                         <p><span></span><%= comment.user.username %> created <%= new Date(comment.createdAt).toDateString() %> </p>

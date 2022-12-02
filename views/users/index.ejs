@@ -12,13 +12,13 @@
             <div class="col-10 offset-1"> <% posts.forEach(post => { %>
               <div class="post">
                   <div class="post-upvote">
-                      <a href="r/<%= post.subreddit.r %>/<%= post._id %>/upvote"><i class="fas fa-arrow-up "></i></a>
+                      <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/upvote"><i class="fas fa-arrow-up "></i></a>
                       <span><%= post.meta.upvotes.length - post.meta.down_votes.length  %> </span>
-                      <a href="r/<%= post.subreddit.r %>/<%= post._id %>/downvote"><i class="fas fa-arrow-down "></i></a>
+                      <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/downvote"><i class="fas fa-arrow-down "></i></a>
                   </div>
                   <div class="post-content">
                       <p><a class='community-text' href="/r/<%= post.subreddit.r %>">r/<%= post.subreddit.r %> </a><span>Posted by <a href="/u/<%= post.user.username %>">u/<%= post.user.username %> </a></span></p>
-                  <h4><a href="r/<%= post.subreddit.r %>/<%= post._id %>"><%= post.title %> </a></h4>
+                  <h4><a href="/r/<%= post.subreddit.r %>/<%= post._id %>"><%= post.title %> </a></h4>
                   <% if (post.body) { %>
                       <p><%= post.body %></p>
                   <% } else if(post.imageURL){ %>
@@ -102,7 +102,7 @@
                <!-- <button class="btn btn-light" type="button"><i class="fas fa fa-solid fa-plus"></i>Add Social Link</button> -->
               <div class="row mt-4"> </div>  
               <div class="text-center">
-                <button type="button" class="user-btn btn btn-primary btn-sm">New Post</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#createPost" class="user-btn btn btn-primary btn-sm">New Post</button>
               </div>
               <div class="text-end pe-4">
                 <!-- <p class="text-primary">More Options</p> -->

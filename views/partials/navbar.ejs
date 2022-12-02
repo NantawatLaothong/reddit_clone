@@ -11,6 +11,8 @@
             <a class="nav-link active" aria-current="page" href="/"> <i class="fas fa-home fa-1x"></i> Home</a>
           <% } else if (url.includes('/r/')) { %>
             <a class="nav-link active" aria-current="page" href="#"><%= url%> </a>
+          <% } else if(url.includes('/u/')) { %>
+            <a class="nav-link active" aria-current="page" href="#"><%= url%> </a>
           <% } else { %>
             NA
           <% } %>  
@@ -22,6 +24,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
               <li><div class="ps-2">Your Communities</div></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createPost"><i class="bi bi-plus-lg"></i> Create a Post</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createCommunity"><i class="bi bi-plus-lg"></i> Create a Community</a></li>
               <% signedUser.followedCommunites.forEach(community => { %>
                 <li><a class="dropdown-item" href="/r/<%= community %>">r/<%= community %> </a></li>
@@ -42,7 +45,7 @@
       
       <form class=" mb-2 mb-lg-0" method="GET" action="/">
           <div class="search-autocomplete">
-            <input style="color: #D7DADC;" class="form-control me-2" type="search" id="search-input" placeholder="Search Community" aria-label="Search">
+            <input style="color: #D7DADC;" class="form-control me-2" type="search" id="search-input" placeholder="Search Community" aria-label="Search" style="text-transform:lowercase;">
           </div>
         </form>
       <ul class="ms-auto mb-2 mb-lg-0">
@@ -134,6 +137,51 @@
     </div>
   </div>
 
+<div class="modal fade" id="createPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content dark-mode">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%  if(signedUser){  %> 
+      <form action="/r/<%= signedUser.followedCommunites[0] %> " method="POST" enctype="multipart/form-data" id="creative_post">
+      <div class="modal-body">
+          <div class="mb-3">
+           
+            <label for="subreddit">Pick a Community:</label>
+            <select class="form-select post_subreddit" onchange="changeAction(this.value)" for="subreddit">
+              <% signedUser.followedCommunites.forEach(community => { %>
+                <option value="<%= community %>">r/<%= community %> </option>
+              <% }) %>
+          </select>
+          
+          </div>
+          <div class="mb-3">
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Title" required>
+          </div>
+          <div class="input-group custom-file mt-3">
+            <input type="file" name="image" class="" />
+            <label class="custom-file-label" for="image">file</label>
+        </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label"></label>
+            <textarea  class="form-control" name="body" id="PostText" ></textarea>
+          </div>
+ 
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </div>
+    </form> 
+    <% } %>    
+    </div>
+  </div>
+</div>
+
+
 <!-- sign up -->
   <div class="modal fade " id="signup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -215,10 +263,10 @@
           <div class="row mt-4">
           <form action="/users/login" method="POST">
             <div class="input-group mx-auto w-50">
-                <input type="text" class="form-control" name="username" id="InsertMedia" placeholder="Username">  
+                <input type="text" class="form-control" name="username" id="InsertMedia" placeholder="Username" required style="text-transform: lowercase">  
             </div>
                 <div class="input-group mx-auto w-50 my-3">
-                    <input type="password" class="form-control" id="password"  name="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password"  name="password" placeholder="Password" required>
                 </div>  
           
           <a href="" class='btn btn-primary custom-button-size ' data-bs-toggle="modal" data-bs-target="#signup">sign up</a>

@@ -219,8 +219,9 @@ router.get('/:subreddit/:id', async(req, res)=>{
   try {
     const {subreddit, id} = req.params
     // const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', match: {"_id": id}});
-    const post = await Post.findOne({_id:id}).populate('comments').populate('user');
+    const post = await Post.findOne({_id:id}).populate({path: 'comments', options:{ populate:'user'} }).populate('user');
     const comments = await Comment.find({post: post}).populate('user');
+    const url = '/' + req.originalUrl.split('/')[1] +  '/' +req.originalUrl.split('/')[2]
     // console.log(r);
     // const post = await r.find({"post._id": id});
     // res.send('hi')
@@ -228,7 +229,8 @@ router.get('/:subreddit/:id', async(req, res)=>{
     // if(r){
       // console.log(post);
       // res.send('ht')
-      res.render('subreddit/single', {post: post, subreddit, comments, url: req.originalUrl});
+      console.log(url);
+      res.render('subreddit/single', {post: post, subreddit, comments, url});
     // } else {
       // res.render('subreddit/404', {subreddit})
     // }

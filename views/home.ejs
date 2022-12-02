@@ -88,23 +88,23 @@
                         <% }) %>
                     </ul>
                 </div>
-                <div class="recent-posts border border-dark p-3">
+                <!-- <div class="recent-posts border border-dark p-3">
                   
                     <div class="">
                         <h4>recent posts</h4>
-                        <% for( let index = 0; index < 5; index++ ) { %>
                         
-                    <% } %> 
                     </div>
-                </div>
+                </div> -->
                 <div class="faq border border-dark p-3">
                     <h4>Home</h4>
-                    <p>Your personal Reddit frontpage. Come here to check in with your favorite communities.</p>
+                    <p>Your personal Foramu frontpage. Come here to check in with your favorite communities.</p>
                     <div class="faq-create text-center">
                         <!-- not needed -->
                         <!-- <a href="/submit" class="btn btn-block faq-create-post mb-3">Create a Post</a> -->
                         <!-- <a href="r/new" class="btn faq-create-community btn-block">Create Community</a> -->
+                        <% if (signedUser) { %>
                         <a href="#" class="btn faq-create-community btn-block" data-bs-toggle="modal" data-bs-target="#createCommunity">Create Community</a>
+                        <% } %>
                     </div>
                 </div>
             </div>

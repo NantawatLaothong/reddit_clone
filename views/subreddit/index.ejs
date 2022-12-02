@@ -88,10 +88,10 @@
                         </div>
                         <div class="post-info-bookmark">
                             <% if(signedUser && signedUser.bookmarked_posts.includes(post._id)) { %>
-                                <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/unbookmark"><i class="fas fa-bookmark fa-1x"></i> Unsave</a>
+                                <a href="/r/<%= subreddit %>/<%= post._id %>/unbookmark"><i class="fas fa-bookmark fa-1x"></i> Unsave</a>
                             <% } else { %>     
                             <!-- signedUser.followedCommunites.includes(subreddit) -->
-                            <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                            <a href="/r/<%= subreddit %>/<%= post._id %>/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
                             <% }  %> 
                         </div>
                     </div>

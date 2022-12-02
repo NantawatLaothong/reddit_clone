@@ -66,7 +66,7 @@ router.get('/profile', isLoggedIn, async(req, res)=>{
         // } else {
             // const posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit')
         // }
-            res.render('users/index', { url : req.url, user, posts})
+            res.render('users/index', { url : req.url, user, posts, url: req.originalUrl})
     } catch(err){
         console.log(err)
     }
@@ -78,7 +78,7 @@ router.get('/:username', async(req, res)=>{
         const user = await User.findOne({username: req.params.username}).populate({path: 'posts', options: { 'populate': 'subreddit',  sort: {'createdAt': -1}}});
         if (user){
             console.log(user.posts);
-            res.render('users/single', {url: req.url, user, posts: user.posts});
+            res.render('users/single', {url: req.url, user, posts: user.posts, url: req.originalUrl});
             // res.send('found the user')
         } else {
             req.send(`can't find the user`)
