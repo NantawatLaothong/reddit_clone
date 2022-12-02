@@ -8,6 +8,7 @@ const Comment = require('../models/comment');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const subreddit = require('../models/subreddit');
 
 // s3 configuration
 const s3AccessKey = process.env.S3_ACCESS_KEY
@@ -215,6 +216,32 @@ router.put('/:subreddit', upload.single('subreddit-icon'), async(req, res)=>{
   }
 })
 
+router.put('/:subreddit/:id', isLoggedIn, isAuthor, upload.single('image'), async(req, res)=>{
+  try{
+    const {subreddit, id} = req.params;
+    const {title, body, file} = req.body;
+    console.log(req.body);
+    const post = await Post.findByIdAndUpdate({_id: id}, {
+      title,
+      body
+    });
+    console.log(post);        
+    post.title = title;
+    console.log(post.title)
+    if(req.file){
+      post.imageURL.url = req.file.location,
+      post.imageURL.filename = req.file.key
+    } 
+    // else {
+    //   post.body = req.body.body
+    // }
+    await post.save();
+    res.redirect(`/r/${subreddit}/${id}`);
+  } catch(err) {
+    res.send(`Something went wrong in Put /:subreddit/:id`)
+  }
+})
+
 router.get('/:subreddit/:id', async(req, res)=>{
   try {
     const {subreddit, id} = req.params
@@ -254,6 +281,19 @@ router.get('/:subreddit/:id/bookmark', isLoggedIn, async(req, res)=>{
     res.send('something went wrong in Get /:subreddit/:id/bookmark')
   }
 });
+
+
+
+router.get('/:subreddit/:id/edit', async(req, res)=>{
+  try {
+    const url = '/' + req.originalUrl.split('/')[1] +  '/' +req.originalUrl.split('/')[2]
+    const {subreddit, id} = req.params;
+    const post = await Post.findById(id)
+    res.render('submit/edit', {post, subreddit, url})
+  } catch(err){ 
+    res.send('something went wrong in GET /:subreddit/:id/edit')
+  }
+})
 
 // unbookmark
 router.get('/:subreddit/:id/unbookmark', isLoggedIn, async(req, res)=>{

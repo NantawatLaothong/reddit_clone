@@ -15,7 +15,12 @@
                     </div>
                     <div class="post-content">
                         <p><a class='community-text' href="/r/<%= subreddit %>">r/<%= subreddit %> </a><span>Posted by <a href="/u/<%= post.user.username %>">u/<%= post.user.username %> </a></span></p>
-                    <h4><a href="#"><%= post.title %></a></h4>
+                        <% if (signedUser){ %>
+                            <% if (post.user.username == signedUser.username) { %>
+                                <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %> </a><span><a class="btn btn-warning" href="/r/<%= subreddit %>/<%= post._id %>/edit">edit</a></span></h4>
+                        <% } } else {%>
+                                <h4><a href="/r/<%= subreddit %>/<%= post._id %>"><%= post.title %> </a></h4>
+                          <% } %>  
                     <% if (post.body) { %>
                         <p><%= post.body %></p>
                     <% } else if(post.imageURL){ %>

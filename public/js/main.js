@@ -138,6 +138,7 @@ $('.loadMorePost').click(function(){
             });
             page += 1
             $.get(`http://localhost:7098/apis/posts?page=${page}`, (posts)=>{
+                getCopyLink()
                 if(posts.length == 0){
                     $('.loadMorePost').remove();
                 }
@@ -150,6 +151,7 @@ $('.loadMorePost').click(function(){
         // let div = document.createElement('DIV')
         // $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
         $.get(`http://localhost:7098/apis/posts?r=${r}&page=${page}`, (posts)=>{
+            getCopyLink()
             if(posts.length == 0){
                 $('.loadMorePost').remove();
             }
@@ -227,6 +229,7 @@ $('.loadMorePost').click(function(){
             });
             page += 1
             $.get(`http://localhost:7098/apis/posts?r=${r}&page=${page}`, (posts)=>{
+                getCopyLink()
                 if(posts.length == 0){
                     $('.loadMorePost').remove();
                 }

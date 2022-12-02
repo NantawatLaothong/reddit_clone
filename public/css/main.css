@@ -195,6 +195,10 @@ input[type=submit] {
     color:#D7DADC !important;
 }
 
+#join {
+    color: #D7DADC !important;
+}
+
 .autocomplete-active {
   /*when navigating through the items using the arrow keys:*/
   background-color: DodgerBlue !important;

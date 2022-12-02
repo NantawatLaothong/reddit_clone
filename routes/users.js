@@ -55,10 +55,10 @@ isLoggedIn = (req, res, next) => {
 router.get('/profile', isLoggedIn, async(req, res)=>{
     try{
         const user = await User.findById(req.user._id);
-        let posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit')
+        let posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit').populate('user')
         if(req.query.bookmarked=='true'){
             console.log(req.query)
-            posts = await Post.find({'_id': { $in : user.bookmarked_posts}}).sort({'createdAt': -1}).populate('subreddit');
+            posts = await Post.find({'_id': { $in : user.bookmarked_posts}}).sort({'createdAt': -1}).populate('subreddit').populate('user');
         }
         // if(req.query){
         //     // const posts = await Post.findMany({'_id': { $all : ['636443d1ca6c37fe280bea8d']}});
@@ -95,8 +95,9 @@ router.put('/:id', upload.single('profileImage'), async(req, res)=>{
             user.Bio.profileImage.url = req.file.location,
             user.Bio.profileImage.filename = req.file.key
         }
+        user.Bio.text = req.body.text
         await user.save();
-        res.redirect('/');
+        res.redirect('/u/profile');
     } catch(err){
         console.log('Putting user failed')
     }
