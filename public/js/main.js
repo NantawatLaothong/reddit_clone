@@ -1,3 +1,33 @@
+// set variable for client side
+(function(){
+    var config = {
+        host: 'localhost',
+        port: '8080',
+        setEnv: function(env){
+            switch (env){
+                case 'development':
+                    this.host = 'localhost';
+                    this.port = '7098';
+                    this.url = `http://${this.host}:${this.port}`
+                    break;
+                case 'production':
+                    this.host = 'forum.helloearth.io';
+                    this.port = '443';
+                    this.url = `https://${this.host}`
+                    break;
+            }
+        }
+    };
+    
+       console.log(config.host);
+       console.log(config.port);
+       config.setEnv('development');
+    
+       console.log(config.host);
+        console.log(config.port);
+        console.log(config.url)
+
+
 var debounce = function (func, wait, immediate) {
     var timeout;
     return function() {
@@ -54,11 +84,11 @@ $('.loadMorePost').click(function(){
         let url;
         if(document.cookie){
             let username = document.cookie.split('=')[1];
-            url = "http://localhost:7098/apis/posts?page="+ page + "&username="+ username;
+            url = config.url + "/apis/posts?page="+ page + "&username="+ username;
             console.log(url);
             // get the username from cookie
         } else {
-            url = `http://localhost:7098/apis/posts?page=${page}`;
+            url = config.url + `/apis/posts?page=${page}`;
         }
         $.get(url, (posts)=>{
             if(posts.length == 0){
@@ -137,7 +167,8 @@ $('.loadMorePost').click(function(){
                 $('.loadMorePost').before(postDiv)
             });
             page += 1
-            $.get(`http://localhost:7098/apis/posts?page=${page}`, (posts)=>{
+            url = config.url + `/apis/posts?page=${page}`
+            $.get(url, (posts)=>{
                 getCopyLink()
                 if(posts.length == 0){
                     $('.loadMorePost').remove();
@@ -150,7 +181,8 @@ $('.loadMorePost').click(function(){
         let r = $('.loadMorePost').attr('data');
         // let div = document.createElement('DIV')
         // $.get(`http://localhost:7098/apis/r/${r}/${page}`, (posts)=>{
-        $.get(`http://localhost:7098/apis/posts?r=${r}&page=${page}`, (posts)=>{
+        url = config.url + `/apis/posts?r=${r}&page=${page}`
+        $.get(url, (posts)=>{
             getCopyLink()
             if(posts.length == 0){
                 $('.loadMorePost').remove();
@@ -228,7 +260,8 @@ $('.loadMorePost').click(function(){
                 $('.loadMorePost').before(postDiv)
             });
             page += 1
-            $.get(`http://localhost:7098/apis/posts?r=${r}&page=${page}`, (posts)=>{
+            url = config.url + `/apis/posts?r=${r}&page=${page}`
+            $.get(url, (posts)=>{
                 getCopyLink()
                 if(posts.length == 0){
                     $('.loadMorePost').remove();
@@ -248,7 +281,7 @@ $('#search-input').keyup(debounce(function(){
         // const items = getSuggestion(term)
     
     
-        $.get(`http://localhost:7098/apis/search/?term=${term}`, (data)=>{
+        $.get(config.url + `/apis/search/?term=${term}`, (data)=>{
             console.log(data)
             let div = document.createElement('DIV');
             div.setAttribute('id', 'autocomplete-list');
@@ -327,7 +360,7 @@ function getCopyLink(){
     copyLinks = document.getElementsByClassName('copyLink');
     for (var i = 0; i < copyLinks.length; i++){
         copyLinks[i].addEventListener('click', (event)=>{
-            let textToCopy = 'https://forum.helloearth.io' + event.target.getAttribute('data');
+            let textToCopy = config.url + event.target.getAttribute('data');
             navigator.clipboard.writeText(textToCopy);
         })
     }
@@ -338,4 +371,8 @@ function changeAction(val) {
 }
 
 getCopyLink()
+
+
+
+})();
 
