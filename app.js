@@ -129,8 +129,8 @@ app.post('/r', async(req, res)=>{
       await subreddit.save();
       res.redirect(`/r/${subreddit.r}`)
     }catch(err){
-      console.log(err)
-      res.send('something went wrong in POST /r')
+      req.flash('error', 'Subreddit with that name already exists, please try another name')
+      res.redirect(`/`)
     }
   })
 

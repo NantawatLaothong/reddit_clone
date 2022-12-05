@@ -3,6 +3,7 @@
 <body>
 <%- include('../partials/navbar'); %>
 <div class="container">
+    <%- include('../partials/flash')  %> 
     <div class="row">
         <h3 class="text-dark"><a href="/r/<%= subreddit %>">/r/<%= subreddit %></a>: everything about anime</h3>
         <div class="col-md-5 offset-md-2">
@@ -33,7 +34,6 @@
                         <div class="post-info-share">
                             <div class="dropdown show">
                                 <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
-                            
                                 <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
                                     <p class="dropdown-item copyLink" data="/r/<%= subreddit %>/<%= post._id %>" href="/r/<%= subreddit %>/<%= post._id %>" ><i class="fas fa-link"></i> Copy Link</a>
                                 </div>
@@ -86,7 +86,7 @@
                             <% }) %>
                         </div>
                         <!-- start for comment-comments -->
-            
+                        
                         <!-- end for comment-comments -->
                     </div>
                     <!-- reply form -->

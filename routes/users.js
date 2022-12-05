@@ -55,6 +55,7 @@ isLoggedIn = (req, res, next) => {
 router.get('/profile', isLoggedIn, async(req, res)=>{
     try{
         const user = await User.findById(req.user._id);
+        const url = '/' + req.originalUrl.split('/')[1] +  '/' +req.originalUrl.split('/')[2].split('?')[0]
         let posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit').populate('user')
         if(req.query.bookmarked=='true'){
             console.log(req.query)
@@ -66,7 +67,7 @@ router.get('/profile', isLoggedIn, async(req, res)=>{
         // } else {
             // const posts = await Post.find({user: req.user._id}).sort({'createdAt': -1}).populate('subreddit')
         // }
-            res.render('users/index', { url : req.url, user, posts, url: req.originalUrl})
+            res.render('users/index', { url : req.url, user, posts, url})
     } catch(err){
         console.log(err)
     }

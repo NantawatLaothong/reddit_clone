@@ -266,6 +266,26 @@ router.get('/:subreddit/:id', async(req, res)=>{
   }
 });
 
+// deleting a post 
+router.get('/:subreddit/:id/delete', isLoggedIn, isAuthor, async(req, res)=>{
+  try{
+    const {subreddit, id} = req.params
+    const user = await User.findById(req.user._id)
+    const post = await Post.findByIdAndDelete(id).populate('subreddit');
+    const subbreddit = await Subreddit.findById(post.subreddit._id);
+    subbreddit.posts.pull(post);
+    user.posts.pull(post);
+    await subbreddit.save();
+    await user.save();
+    req.flash('success', 'Post deleted')
+    res.redirect(`/r/${subreddit}`)
+  } catch(err){
+    req.flash('error', 'You do not have the permission!')
+    console.log(err);
+    res.redirect('/');
+  }
+})
+
 // Bookmarking a post
 router.get('/:subreddit/:id/bookmark', isLoggedIn, async(req, res)=>{
   try {
@@ -320,6 +340,12 @@ router.get('/:subreddit/:id/upvote', isLoggedIn, async(req, res)=>{
     const post = await Post.findOne({_id:id});
   if (user.upvotes.includes(id)){
       console.log('already added')
+      post.meta.upvotes.pull(req.user._id);
+      user.upvotes.pull(id);
+      // res.redirect(`/r/${subreddit}/${id}`)
+      await user.save();
+      await post.save();
+      req.flash('success','upvote undo')
       res.redirect(`/r/${subreddit}/${id}`)
     } else if(user.down_votes.includes(id)){
       // remove the downvote and add to the upvote
@@ -330,6 +356,7 @@ router.get('/:subreddit/:id/upvote', isLoggedIn, async(req, res)=>{
       await user.save();
       await post.save();
       console.log('downvote is being replaced by upvote')
+      req.flash('success','downvote is now upvote')
       res.redirect(`/r/${subreddit}/${id}`)
     } else {
       // add the upvore
@@ -338,11 +365,12 @@ router.get('/:subreddit/:id/upvote', isLoggedIn, async(req, res)=>{
       await user.save();
       await post.save();
       console.log('upvote added successfully');
+      req.flash('success','upvote successfully')
       res.redirect(`/r/${subreddit}/${id}`)
     }
   }catch(err){
     console.log(err)
-    res.send(err);
+    res.send('error in upvote');
   }
 })
 
@@ -352,7 +380,12 @@ router.get('/:subreddit/:id/downvote', isLoggedIn, async(req, res)=>{
     const user = await User.findById(req.user._id);
     const post = await Post.findOne({_id:id});
   if (user.down_votes.includes(id)){
-      console.log('already added')
+      post.meta.down_votes.pull(req.user._id);
+      user.down_votes.pull(id);
+      // res.redirect(`/r/${subreddit}/${id}`)
+      await user.save();
+      await post.save();
+      req.flash('success','downvote undo')
       res.redirect(`/r/${subreddit}/${id}`)
     } else if(user.upvotes.includes(id)){
       // remove the upvotes and add to the downvote
@@ -362,6 +395,7 @@ router.get('/:subreddit/:id/downvote', isLoggedIn, async(req, res)=>{
       post.meta.down_votes.push(req.user._id)
       await user.save();
       await post.save();
+      req.flash('success','upvote is now downvote')
       console.log('upvote is being replaced by downvote')
       res.redirect(`/r/${subreddit}/${id}`)
     } else {
@@ -371,6 +405,7 @@ router.get('/:subreddit/:id/downvote', isLoggedIn, async(req, res)=>{
       await user.save();
       await post.save();
       console.log('dowvote added successfully');
+      req.flash('success','downvote successfully')
       res.redirect(`/r/${subreddit}/${id}`)
     }
   }catch(err){

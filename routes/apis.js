@@ -11,7 +11,7 @@ const router = express.Router()
 router.get('/search', async(req, res)=>{
     try{
         const {term} = req.query
-        const query = await Subreddit.find({r: {"$regex": term} });
+        const query = await Subreddit.find({r: {"$regex": term} }).select('r followers iconURL');
         res.json(query);
     } catch(err){
         res.send(err)

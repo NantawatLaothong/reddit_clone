@@ -71,17 +71,19 @@ router.post('/:id', isLoggedIn, async(req, res)=>{
     try{
         const {id} = req.params
         const user = await User.findById(req.user._id);
-        const comment = await Comment.findById(id)
+        const comment = await Comment.findById(id).populate({path: 'post', options: {populate: 'subreddit'}})
         const replyComment = new Comment({
             body: req.body.commentText
         });
+        const post = comment.post
         replyComment.user = user
         user.comments.push(replyComment);
         comment.comments.push(replyComment);
         await replyComment.save();
         await user.save();
         await comment.save();
-        res.redirect(`/`)
+        // routing to homepage
+        res.redirect(`/r/${post.subreddit.r}/${post._id}`);
     } catch(err) {
         res.send('something went wront in POST /c/:id')
     }
