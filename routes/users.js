@@ -25,7 +25,7 @@ const upload = multer({
     storage: multerS3({
         // s3 
         s3: s3,
-        bucket: "dev-app-clone-994214",
+        bucket: process.env.S3_BUCKET,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
           },

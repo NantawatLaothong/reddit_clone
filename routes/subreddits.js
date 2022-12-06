@@ -25,7 +25,7 @@ const upload = multer({
     storage: multerS3({
         // s3 
         s3: s3,
-        bucket: "dev-app-clone-994214",
+        bucket: process.env.S3_BUCKET,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
           },
@@ -247,7 +247,7 @@ router.get('/:subreddit/:id', async(req, res)=>{
     const {subreddit, id} = req.params
     // const r = await Subreddit.findOne({r: subreddit}).populate({path: 'posts', match: {"_id": id}});
     const post = await Post.findOne({_id:id}).populate({path: 'comments', options:{ populate:'user'} }).populate('user');
-    const comments = await Comment.find({post: post}).populate('user').populate({path:'comments', options:{ populate:'user'}});
+    const comments = await Comment.find({post: post}).populate('user').populate({path:'comments', options:{ populate:'user comments'}});
     const url = '/' + req.originalUrl.split('/')[1] +  '/' +req.originalUrl.split('/')[2]
     // console.log(r);
     // const post = await r.find({"post._id": id});
@@ -422,7 +422,7 @@ router.get('/submit', async(req, res)=>{
   }
 })
 
-router.post('/:subreddit/:id/comment', async(req, res)=>{
+router.post('/:subreddit/:id/comment', isLoggedIn,async(req, res)=>{
   try{
     const {subreddit, id} = req.params
     const post = await Post.findById(id);

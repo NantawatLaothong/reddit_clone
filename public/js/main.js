@@ -19,11 +19,10 @@
         }
     };
     
-       console.log(config.host);
-       console.log(config.port);
+
        config.setEnv('development');
     
-       console.log(config.host);
+        console.log(config.host);
         console.log(config.port);
         console.log(config.url)
 

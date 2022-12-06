@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const port = 7098;
+const port = process.env.port;
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
@@ -93,7 +93,7 @@ app.get('/', async (req, res)=>{
             console.log(user.followedCommunites)
             const r = await Subreddit.find({r: {$in: user.followedCommunites}}).limit(5);
             // find 5 posts
-            const posts = await Post.find({subreddit: {$in: r}}).populate('subreddit').populate('meta').populate('user').sort({ createdAt: -1 }).limit(5);
+            const posts = await Post.find({subreddit: {$in: r}}).populate('subreddit').populate('meta').populate('user').sort({ createdAt: -1 }).limit(5).populate({path: 'comments', options: {populate: 'comments'}});
             // console.log('r value')
             // console.log(r);
             // console.log('posts value')
@@ -125,6 +125,7 @@ app.post('/r', async(req, res)=>{
       const subreddit = new Subreddit(body)
       user.subreddits.push(subreddit)
       subreddit.creator = user;
+      subreddit.iconURL.url = 'https://dev-app-clone-994214.s3.amazonaws.com/1646642994810__cat.jpg';
       await user.save();
       await subreddit.save();
       res.redirect(`/r/${subreddit.r}`)

@@ -82,7 +82,7 @@
                                 <% }else{ %>
                                 <img class='icon-image' width="50px" src="https://i.pinimg.com/474x/1c/9f/a9/1c9fa971343023a1dfcf69274b60c2f4.jpg" alt="">
                                 <% } %> 
-                                <a class="nav-link" href="r/<%= subreddit.r %>">r/<%= subreddit.r %> </a>
+                                <a class="nav-link" href="r/<%= subreddit.r %>">r/<%= subreddit.r.length < 8 ? subreddit.r : subreddit.r.substring(0,8) + '...' %> </a>
                                 <% if (signedUser) { %>
                                 <a class="btn btn-dark" href="/r/<%= subreddit.r %>/leave">Leave</a>
                                 <% } else {%>

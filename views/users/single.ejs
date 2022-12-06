@@ -2,6 +2,7 @@
 <div class="border border-success p-2 border-opacity-10">
 </div>
   <div class="container">
+    <%- include('../partials/flash')  %> 
     <div class="row mt-4">
         <div class="col-xl-8">
           <div class="row">
@@ -40,10 +41,14 @@
                               </div>
                           </div>
                       </div>
-                      <!-- <div class="post-info-bookmark"> -->
-                        <!-- bookmark saving a post send a get to backend that store the post_id to user.bookmarked_post -->
-                          <!-- <i class="fas fa-bookmark fa-1x"></i> Save
-                      </div> -->
+                      <div class="post-info-bookmark">
+                        <% if(signedUser && signedUser.bookmarked_posts.includes(post._id)) { %>
+                            <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/unbookmark"><i class="fas fa-bookmark fa-1x"></i> Unsave</a>
+                        <% } else { %>     
+                        <!-- signedUser.followedCommunites.includes(subreddit) -->
+                        <a href="/r/<%= post.subreddit.r %>/<%= post._id %>/bookmark"><i class="fas fa-bookmark fa-1x"></i> Save</a>
+                        <% }  %> 
+                    </div>
                   </div>
                   </div>
               </div>
