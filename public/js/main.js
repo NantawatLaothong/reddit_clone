@@ -1,5 +1,5 @@
 // set variable for client side
-(function(){
+function getConfig(){
     var config = {
         host: 'localhost',
         port: '8080',
@@ -18,13 +18,15 @@
             }
         }
     };
-    
+        return config;
 
-       config.setEnv('development');
-    
-        console.log(config.host);
-        console.log(config.port);
-        console.log(config.url)
+};
+let config = getConfig()
+config.setEnv('development');
+
+console.log(config.host);
+console.log(config.port);
+console.log(config.url)
 
 
 var debounce = function (func, wait, immediate) {
@@ -372,6 +374,4 @@ function changeAction(val) {
 getCopyLink()
 
 
-
-})();
 
