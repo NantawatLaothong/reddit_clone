@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-const port = process.env.port;
+const port = 8000;
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
@@ -13,7 +13,7 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const multer = require('multer')
 const multerS3 = require('multer-s3');
-// var favicon = require('serve-favicon');
+var favicon = require('serve-favicon');
 const User = require('./models/user');
 const subredditRouter = require('./routes/subreddits');
 const authRoute = require('./routes/auth-route');
@@ -41,7 +41,7 @@ app.use(session(sessionOptions))
 app.use(flash())
 
 // setting favicom
-// app.use(favicon(path.join(__dirname, 'public','images','favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public','images','Foramu_Logo.ico')))
 // parse file from the form
 // multer({dest: ''});
 app.use(methodOverride('_method'));
