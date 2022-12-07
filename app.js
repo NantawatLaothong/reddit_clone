@@ -116,6 +116,11 @@ app.get('/', async (req, res)=>{
 // to create a subreddit
 app.post('/r', async(req, res)=>{
     try{
+      const subreddit = await Subreddit.findOne({r: req.body.r.toLowerCase()});
+      if(subreddit){
+        req.flash('error', 'Subreddit with that name already exists, please try another name')
+        res.redirect(`/`)
+      }else{
       const body = {
         r: req.body.r.toLowerCase(),
         description: req.body.description    
@@ -129,6 +134,7 @@ app.post('/r', async(req, res)=>{
       await user.save();
       await subreddit.save();
       res.redirect(`/r/${subreddit.r}`)
+    }
     }catch(err){
       req.flash('error', 'Subreddit with that name already exists, please try another name')
       res.redirect(`/`)

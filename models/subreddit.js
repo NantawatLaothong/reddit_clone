@@ -7,6 +7,7 @@ const subredditSchema = new Schema({
     r: {
         type: String,
         required: true,
+        unique: true 
     },
     iconURL: {
         url: String,
