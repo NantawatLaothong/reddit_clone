@@ -2,12 +2,12 @@
 function getConfig(){
     var config = {
         host: 'localhost',
-        port: '8080',
+        port: '8000',
         setEnv: function(env){
             switch (env){
                 case 'development':
                     this.host = 'localhost';
-                    this.port = '7098';
+                    this.port = '8000';
                     this.url = `http://${this.host}:${this.port}`
                     break;
                 case 'production':

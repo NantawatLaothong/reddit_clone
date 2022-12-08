@@ -84,7 +84,13 @@
                             <a href="/r/<%= subreddit %>/<%= post._id %>"><span><i class="fas fa-comment fa-1x"></i> <%= post.comments.length %>  Comments</span></a>
                         </div>
                         <div class="post-info-share">
-                            <i class="fas fa-share fa-1x"></i> Share
+                            <div class="dropdown show">
+                                <a class="dropdown-toggle" href="#" role="button" id="shareMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-share fa-1x"></i> Share</a>
+                            
+                                <div class=" text-center dropdown-menu" aria-labelledby="shareMenu">
+                                    <p class="dropdown-item copyLink" data="/r/<%= subreddit %>/<%= post._id %>" href="/r/<%= subreddit %>/<%= post._id %>" ><i class="fas fa-link"></i> Copy Link</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="post-info-bookmark">
                             <% if(signedUser && signedUser.bookmarked_posts.includes(post._id)) { %>
@@ -98,9 +104,12 @@
                     </div>
                 </div>
             <% }) %>
-            
+            <% if (posts.length == 5) { %>
                 <button class="btn btn-dark loadMorePost" data="<%= subreddit %>">Load more posts</p>
-            
+            <% } else { %>
+                
+            <% } %>
+                
             
         </div>
         
