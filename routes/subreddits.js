@@ -13,19 +13,20 @@ const subreddit = require('../models/subreddit');
 // s3 configuration
 const s3AccessKey = process.env.S3_ACCESS_KEY
 const s3SecretKey = process.env.S3_SECRET_ACCESS_KEY
-const s3Buceket = process.env.S3_BUCKET_REGION
+const s3Buceket = process.env.S3_BUCKET
+const region = process.env.S3_BUCKET_REGION
 
 const s3 = new aws.S3({
     accessKeyId: s3AccessKey,
     secretAccessKey: s3SecretKey,
-    region: s3Buceket
+    region: region
 })
 
 const upload = multer({
     storage: multerS3({
         // s3 
         s3: s3,
-        bucket: process.env.S3_BUCKET,
+        bucket: s3Buceket,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
           },
